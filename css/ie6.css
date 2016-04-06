@@ -1,0 +1,28 @@
+#filtering-nav li {
+	background: none;
+	float: left;
+	padding: 0px;
+}
+
+.filter_by {
+	margin-left: none;
+	padding-left: none;
+}
+
+#filtering-nav li.email {
+	padding: 6px;
+	display: block;
+	background-color: #fff;
+}
+
+#contact_pop {
+	background: none;
+}
+
+	
+#contact_info {
+	display: none;
+}
+
+footer#page_footer { 
+	padding-top: 50px;}
