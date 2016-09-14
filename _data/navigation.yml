@@ -1,7 +1,10 @@
 # main links links
 main:
-  - title: "Sample Navigation Link"
+  - title: "Blog Personal"
     url: https://mmistakes.github.io/minimal-mistakes/docs/navigation/
 
-  - title: "Sample Navigation Link 2"
+  - title: "Proyectos"
+    url: /
+
+  - title: "Currículum Vitae"
     url: /
