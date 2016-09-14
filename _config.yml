@@ -6,12 +6,12 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-locale                   : "en"
-title                    : "Site Title"
+locale                   : "es"
+title                    : "Albert Gil Escura"
 title_separator          : "-"
-name                     : "Your Name"
-description              : "An amazing website."
-url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+name                     : "Albert Gil Escura"
+description              : "Esta es mi web personal, mi pequeño diario personal, donde escribo cualquier cosa que voy aprendiendo, día tras día."
+url                      : http://agescura.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
@@ -77,17 +77,17 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "Albert Gil Escura"
   avatar           : "bio-photo.jpg"
-  bio              : "I am an amazing person."
-  location         : "Somewhere"
-  email            :
+  bio              : "Trabajando duro para llegar a ser un desarrollador iOS un día de estos."
+  location         : "Itaca"
+  email            : "agilescura@gmail.com"
   uri              :
   bitbucket        :
   codepen          :
   dribbble         :
   flickr           :
-  facebook         :
+  facebook         : "https://www.facebook.com/agescura"
   foursquare       :
   github           :
   google_plus      :
@@ -100,7 +100,7 @@ author:
   stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
   steam            :
   tumblr           :
-  twitter          :
+  twitter          : "https://www.twitter.com/agescura"
   vine             :
   weibo            :
   xing             :
