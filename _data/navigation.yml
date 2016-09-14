@@ -4,7 +4,7 @@ main:
     url: https://mmistakes.github.io/minimal-mistakes/docs/navigation/
 
   - title: "Proyectos"
-    url: /
+    url: /proyectos
 
   - title: "Currículum Vitae"
     url: /
