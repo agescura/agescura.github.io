@@ -1,7 +1,7 @@
 ---
 title: "Proyectos"
 layout: single
-permalink: /proyectos
+permalink: /proyectos/
 ---
 
 Yeeeep
