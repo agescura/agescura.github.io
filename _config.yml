@@ -12,7 +12,7 @@ title_separator          : "-"
 name                     : "Albert Gil Escura"
 description              : "Esta es mi web personal, mi pequeño diario personal, donde escribo cualquier cosa que voy aprendiendo, día tras día."
 url                      : http://agescura.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
-baseurl                  : "/blog" # the subpath of your site, e.g. "/blog"
+baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
