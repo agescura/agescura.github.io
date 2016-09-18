@@ -10,12 +10,45 @@ permalink: /curriculum/
 <h3>Formación</h3>
 
 <ul>
-<li>
-<p>Erasmus Mundus Master of Science in Geospatial Technologies (2014, 2016)</p>
+  <li>
+    <p>Erasmus Mundus Master of Science in Geospatial Technologies (2014, 2016)</p>
+    </li>
+  <li>
+    <p>Ingeniería Tècnica en Informática de Gestión (2009, 2014)</p>
+  </li>
+  <li>
+    <p>Curso de Postgrado - Especialización en aplicaciones de iPhone i iPad (2012, 2013)</p>
+  </li>
+  <li>
+    <p>Curso de Postgrado - Tecnologías de programación .NET con C# (2011, 2012)</p>
+  </li>
+</ul>
 
-<h5>Universitat Jaume I, Castellón (Spain)</h5>
-<h5>NOVA IMS, Lisbon (Portugal)</h5>
-<h5>Institut für Geoinformatik, Münster (Germany)</h5>
-<h5>Open Data, a new approach with GIS components.</h5>
-<h5>Esta tésis realiza un estudio sobre el estado actual del concepto de Open Data y sugiere la idea de aprovechar diversos elementos geoespaciales. Se incluye un desarrollo web que engloba todo este concepto.</h5>
+<h3>Experiencia laboral</h3>
+
+<ul>
+  <li>
+    <p>Desarrollador iOS en Seidor Consulting (2016, actualidad)</p>
+  </li>
+  <li>
+    <p>Desarrollador iOS en Universitat Jaume I (2013, 2014)</p>
+  </li>
+  <li>
+    <p>Desarrolador PHP en NRS-Group (2013, 2013)</p>
+  </li>
+  <li>
+    <p>Operario de laboratorio en Cottocer S.L. (2005, 2009)</p>
+  </li>
+</ul>
+
+<h3>Otros intereses</h3>
+
+<li>
+  <p>Curso de Android en edx (2016)</p>
+</li>
+<li>
+  <p>Curso de MEAN en edx (2015)</p>
+</li>
+<li>
+  <p>Curso de Latex en UJI (2012)</p>
 </li>
