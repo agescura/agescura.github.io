@@ -24,7 +24,7 @@
   <li>Agrego un UIButton, justo debajo del UIImage creado anteriormente.</li>
   <li>Modifico alguna de sus propiedades visuales para mejorar la presentación.</li>
 
-  <src img="{{ site.url }}/images/stackview-chapter-1-5.png">
+  <src img="images/stackview-chapter-1-5.png">
 
 </ul>
 
