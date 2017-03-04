@@ -4,6 +4,11 @@ title:  "Introducción a la programación funcional con Swift 3!"
 date:   2017-03-04 12:00:00 -0600
 categories: swift funcional
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `bundle exec jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
-
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+<h2>Motivación</h2>
+<p>En esta primera entrada sobre la programación funcional veremos unos ejemplos prácticos sobre tres funciones importantes.</p>
+<ul>
+  <li>map</li>
+  <li>filter</li>
+  <li>reduce</li>
+</ul>
+<p>Estas tres funciones son muy usadas en los lenguajes funcionales, pero, hay que entender, que el lenguaje funcional va más allá del uso de este tipo de funciones. Como ejemplo introductorio y de repaso de alguna de las funcionalidades de Swift para entrar en materia, lo veo más que suficiente por ahora.</p>
