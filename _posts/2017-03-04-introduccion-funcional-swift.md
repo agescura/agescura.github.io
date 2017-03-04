@@ -2,6 +2,7 @@
 layout: post
 title:  "Introducción a la programación funcional con Swift 3!"
 date:   2017-03-04 12:00:00 -0600
+author_profile: true
 categories: swift funcional
 ---
 <h2>Motivación</h2>

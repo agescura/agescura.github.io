@@ -42,7 +42,7 @@ permalink: /curriculum/
 </ul>
 
 <h3>Otros intereses</h3>
-
+<ul>
 <li>
   <p>Curso de Android en edx (2016)</p>
 </li>
@@ -52,3 +52,4 @@ permalink: /curriculum/
 <li>
   <p>Curso de Latex en UJI (2012)</p>
 </li>
+</ul>
