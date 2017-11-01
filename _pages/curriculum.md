@@ -10,6 +10,10 @@ permalink: /curriculum/
 <h3>Formación</h3>
 
 <ul>
+<li>
+  <p>Máster en Métodos Ágiles (2017, actualidad)</p>
+  </li>
+<li>
   <li>
     <p>Erasmus Mundus Master of Science in Geospatial Technologies (2014, 2016)</p>
     </li>
@@ -27,8 +31,17 @@ permalink: /curriculum/
 <h3>Experiencia laboral</h3>
 
 <ul>
+<li>
+  <p>Desarrollador iOS en Flyshionista (2017, actualidad)</p>
+</li>
+<li>
+  <p>Desarrollador iOS en inqBarna (2017)</p>
+</li>
+<li>
+  <p>Desarrollador iOS en Slash Mobility (2017)</p>
+</li>
   <li>
-    <p>Desarrollador iOS en Seidor Consulting (2016, actualidad)</p>
+    <p>Desarrollador iOS en Seidor Consulting (2016, 2017)</p>
   </li>
   <li>
     <p>Desarrollador iOS en Universitat Jaume I (2013, 2014)</p>
@@ -43,6 +56,9 @@ permalink: /curriculum/
 
 <h3>Otros intereses</h3>
 <ul>
+<li>
+  <p>Curso de React Native en Udemy (2017)</p>
+</li>
 <li>
   <p>Curso de Android en edx (2016)</p>
 </li>

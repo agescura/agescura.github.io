@@ -1,7 +1,7 @@
 # main links links
 main:
-  - title: "Proyectos"
-    url: /proyectos
-
   - title: "Currículum Vitae"
     url: /curriculum
+    
+  - title: "Proyectos"
+    url: /proyectos
