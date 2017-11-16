@@ -10,13 +10,12 @@ permalink: /curriculum/
 <h3>Formación</h3>
 
 <ul>
-<li>
-  <p>Máster en Métodos Ágiles (2017, actualidad)</p>
+  <li>
+    <p>Máster en Métodos Ágiles (2017, actualidad)</p>
   </li>
-<li>
   <li>
     <p>Erasmus Mundus Master of Science in Geospatial Technologies (2014, 2016)</p>
-    </li>
+  </li>
   <li>
     <p>Ingeniería Tècnica en Informática de Gestión (2009, 2014)</p>
   </li>
@@ -31,9 +30,6 @@ permalink: /curriculum/
 <h3>Experiencia laboral</h3>
 
 <ul>
-<li>
-  <p>Desarrollador iOS en Flyshionista (2017, actualidad)</p>
-</li>
 <li>
   <p>Desarrollador iOS en inqBarna (2017)</p>
 </li>
