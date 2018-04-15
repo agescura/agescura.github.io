@@ -67,3 +67,4 @@ permalink: /curriculum/
 </ul>
 
 <a href= "https://sbw75.app.goo.gl/">Dynamic link</a>
+<a href="https://sbw75.app.goo.gl/NSef">Deep link</a>
