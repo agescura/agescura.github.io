@@ -65,3 +65,5 @@ permalink: /curriculum/
   <p>Curso de Latex en UJI (2012)</p>
 </li>
 </ul>
+
+<a href= "https://sbw75.app.goo.gl/">Dynamic link</a>
