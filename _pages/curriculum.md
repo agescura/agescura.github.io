@@ -67,4 +67,4 @@ permalink: /curriculum/
 </ul>
 
 <a href= "https://sbw75.app.goo.gl/">Dynamic link</a>
-<a href="https://sbw75.app.goo.gl/NSef">Deep link</a>
+<a href="https://sbw75.app.goo.gl/?link=http://agescura.github.io/curriculum&isi=1357960597&ibi=com.medox.ios.stage&ifl=http://agescura.github.io/curriculum?invitedby=1000">Deep link</a>
