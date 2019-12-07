@@ -54,20 +54,20 @@ permalink: /curriculum/
   <li>
     <p>Desarrolador PHP en NRS-Group (2013, 2013)</p>
   </li>
-  <li>
-    <p>Operario de laboratorio en Cottocer S.L. (2005, 2009)</p>
-  </li>
 </ul>
 
 <h3>Otros intereses</h3>
 <ul>
 <li>
-  <p>Clase magistral de Agile Testing en Universidad Católica de Chile</p>
+  <p>Agile Testing en Universidad Católica de Chile</p>
 </li>
 <li>
   <p>iOS Love Meetup: RxSwift en las trincheras</p>
 </li>
 <li>
   <p>iOS Love Meetup: RxSwift y RxCocoa</p>
+</li>
+<li>
+  <p>Proyecto Almassora Info desarrollado con Flutter (2018)</p>
 </li>
 </ul>
