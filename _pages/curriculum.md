@@ -11,7 +11,10 @@ permalink: /curriculum/
 
 <ul>
   <li>
-    <p>Máster en Métodos Ágiles (2017, actualidad)</p>
+    <p>Certified Scrum Master, Scrum Alliance (2017, 2021)</p>
+    </li>
+  <li>
+    <p>Máster en Métodos Ágiles (2017, 2018)</p>
   </li>
   <li>
     <p>Erasmus Mundus Master of Science in Geospatial Technologies (2014, 2016)</p>
@@ -30,6 +33,12 @@ permalink: /curriculum/
 <h3>Experiencia laboral</h3>
 
 <ul>
+<li>
+  <p>Desarrollador iOS en Globant (2019)</p>
+</li>
+<li>
+  <p>Desarrollador iOS en Antai (2018)</p>
+</li>
 <li>
   <p>Desarrollador iOS en inqBarna (2017)</p>
 </li>
@@ -53,18 +62,12 @@ permalink: /curriculum/
 <h3>Otros intereses</h3>
 <ul>
 <li>
-  <p>Curso de React Native en Udemy (2017)</p>
+  <p>Clase magistral de Agile Testing en Universidad Católica de Chile</p>
 </li>
 <li>
-  <p>Curso de Android en edx (2016)</p>
+  <p>iOS Love Meetup: RxSwift en las trincheras</p>
 </li>
 <li>
-  <p>Curso de MEAN en edx (2015)</p>
-</li>
-<li>
-  <p>Curso de Latex en UJI (2012)</p>
+  <p>iOS Love Meetup: RxSwift y RxCocoa</p>
 </li>
 </ul>
-
-<a href= "https://sbw75.app.goo.gl/">Dynamic link</a>
-<a href="https://sbw75.app.goo.gl/?link=http://agescura.github.io/curriculum&isi=1357960597&ibi=com.medox.ios.stage&ifl=http://agescura.github.io/curriculum?invitedby=1000">Deep link</a>
