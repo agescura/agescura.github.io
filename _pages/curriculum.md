@@ -71,4 +71,4 @@ permalink: /curriculum/
   <p>Proyecto Almassora Info desarrollado con Flutter (2018)</p>
 </li>
 </ul>
-<a href= "https://sbw75.app.goo.gl/">Dynamic link</a>
+<a href= "https://ayoba.page.link/tj97">Dynamic link</a>
