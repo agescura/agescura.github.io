@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/agescura/agescura.github.io/my-app/static/css/main.9d5b29c0.chunk.css",
+    "main.js": "/agescura/agescura.github.io/my-app/static/js/main.d140091e.chunk.js",
+    "main.js.map": "/agescura/agescura.github.io/my-app/static/js/main.d140091e.chunk.js.map",
+    "runtime-main.js": "/agescura/agescura.github.io/my-app/static/js/runtime-main.18827d21.js",
+    "runtime-main.js.map": "/agescura/agescura.github.io/my-app/static/js/runtime-main.18827d21.js.map",
+    "static/js/2.910eb6d6.chunk.js": "/agescura/agescura.github.io/my-app/static/js/2.910eb6d6.chunk.js",
+    "static/js/2.910eb6d6.chunk.js.map": "/agescura/agescura.github.io/my-app/static/js/2.910eb6d6.chunk.js.map",
+    "static/js/3.705cb397.chunk.js": "/agescura/agescura.github.io/my-app/static/js/3.705cb397.chunk.js",
+    "static/js/3.705cb397.chunk.js.map": "/agescura/agescura.github.io/my-app/static/js/3.705cb397.chunk.js.map",
+    "index.html": "/agescura/agescura.github.io/my-app/index.html",
+    "static/css/main.9d5b29c0.chunk.css.map": "/agescura/agescura.github.io/my-app/static/css/main.9d5b29c0.chunk.css.map",
+    "static/js/2.910eb6d6.chunk.js.LICENSE.txt": "/agescura/agescura.github.io/my-app/static/js/2.910eb6d6.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/agescura/agescura.github.io/my-app/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.18827d21.js",
+    "static/js/2.910eb6d6.chunk.js",
+    "static/css/main.9d5b29c0.chunk.css",
+    "static/js/main.d140091e.chunk.js"
+  ]
+}
