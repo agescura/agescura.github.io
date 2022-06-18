@@ -68,4 +68,4 @@ Un método es una función declarada dentro de una clase. Hay propiedades, store
 
 <a href="https://www.objc.io/books/advanced-swift/">Más info</a>
 
-[back](./)
+[Volver](./)

@@ -1,4 +1,4 @@
-I":<h2 id="valores-variables-referencias-y-constantes">Valores, variables, referencias y constantes</h2>
+I"�<h2 id="valores-variables-referencias-y-constantes">Valores, variables, referencias y constantes</h2>
 
 <p>Un value o valor es inmutable y para siempre. Nunca va a cambiar. Por ejemplo, 1 de tipo Int o true de tipo Bool, son valores inmutables. También recibe el nombre de literales. Un literal es un valor inmutable que se genera directamente en el código.</p>
 
@@ -54,7 +54,9 @@
 
 <p>Un método es una función declarada dentro de una clase. Hay propiedades, stored properties y computed properties.</p>
 
-<p>https://www.objc.io/books/advanced-swift/</p>
+<p>Bibliografía y más información en objc.io aquí</p>
 
-<p><a href="./">back</a></p>
+<p><a href="https://www.objc.io/books/advanced-swift/">Más info</a></p>
+
+<p><a href="./">Volver</a></p>
 :ET
