@@ -62,4 +62,9 @@ Las funciones en Swift son por valor. Las funciones pueden tomar otras funciones
 
 Un método es una función declarada dentro de una clase. Hay propiedades, stored properties y computed properties.
 
+
+
+Bibliografía y más información en objc.io aquí
+<a href="https://www.objc.io/books/advanced-swift/">Más info</a>
+
 [back](./)

@@ -1,4 +1,4 @@
-I"<h2 id="valores-variables-referencias-y-constantes">Valores, variables, referencias y constantes</h2>
+I":<h2 id="valores-variables-referencias-y-constantes">Valores, variables, referencias y constantes</h2>
 
 <p>Un value o valor es inmutable y para siempre. Nunca va a cambiar. Por ejemplo, 1 de tipo Int o true de tipo Bool, son valores inmutables. También recibe el nombre de literales. Un literal es un valor inmutable que se genera directamente en el código.</p>
 
@@ -53,6 +53,8 @@
 <p>Las funciones en Swift son por valor. Las funciones pueden tomar otras funciones y transformar elementos. Map es una función de alto nivel. Las clausuras permiten devolver variables cuando pasas funciones por parámetro.</p>
 
 <p>Un método es una función declarada dentro de una clase. Hay propiedades, stored properties y computed properties.</p>
+
+<p>https://www.objc.io/books/advanced-swift/</p>
 
 <p><a href="./">back</a></p>
 :ET
