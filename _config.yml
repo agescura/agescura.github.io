@@ -30,8 +30,6 @@ theme: minima
 plugins:
   - jekyll-feed
 
-objc_advanced_swift_url: https://www.objc.io/books/advanced-swift/
-
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
