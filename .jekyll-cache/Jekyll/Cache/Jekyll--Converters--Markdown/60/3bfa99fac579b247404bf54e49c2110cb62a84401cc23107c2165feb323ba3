@@ -1,0 +1,69 @@
+I"6<h2 id="tipos">Tipos</h2>
+
+<p>Voy a dejar comentarios de lo aprendido en Haskell, comparándolo con Swift. Adelantar, que la parte funcional de Swift está, prácticamente copiada de Haskell. Así que muchas cosas van a ser sencillamente idénticas.</p>
+
+<p>De momento, usaremos la orden ghci, que viene a ser el terminal en haskell. Podemos usar operaciones como la suma, la multiplicación.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span> <span class="o">*</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<p>La división en Haskell no es entera</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="o">#</span> <span class="kt">Ojo</span><span class="p">,</span> <span class="n">es</span> <span class="mf">1.5</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span>
+</code></pre></div></div>
+
+<p>Los paréntesis en Haskell son importantes. La precedencia es la que es en todos los lenguajes de programación. Podemos seguirla o, bien, cambiarla. En Swift también podemos definir operadores y cambiar su precedencia o bien utilizar paréntesis.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">5</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">-</span> <span class="mi">10</span>
+<span class="o">#</span> <span class="mi">15</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span>
+<span class="o">#</span> <span class="mi">15</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">10</span><span class="p">)</span>
+<span class="o">#</span> <span class="o">-</span><span class="mi">25</span>
+</code></pre></div></div>
+
+<p>No estamos restringidos a usar números positivos. Pero tenemos que usar paréntesis.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">5</span> <span class="o">*</span> <span class="o">-</span><span class="mi">10</span>
+<span class="o">#</span> <span class="kt">Precedence</span> <span class="n">parsing</span> <span class="n">error</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Los tipos boleanos en Haskell empiezan por mayúsucla.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">True</span> <span class="o">&amp;&amp;</span> <span class="kt">False</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">False</span> <span class="o">||</span> <span class="kt">True</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">not</span> <span class="kt">False</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">not</span> <span class="p">(</span><span class="kt">False</span> <span class="o">||</span> <span class="kt">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Si queremos comparar tipos, tenemos los operadores de igualdad y desigualdad. Pero, tienen que ser los mismos tipos.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">5</span> <span class="o">==</span> <span class="mi">5</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span> <span class="o">/=</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">5</span> <span class="o">==</span> <span class="s">"Cinco"</span>
+<span class="o">#</span> <span class="n">error</span>
+</code></pre></div></div>
+:ET

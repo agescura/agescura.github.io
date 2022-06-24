@@ -1,0 +1,20 @@
+I"l<h2 id="tipos">Tipos</h2>
+
+<p>Voy a dejar comentarios de lo aprendido en Haskell, comparándolo con Swift. Adelantar, que la parte funcional de Swift está, prácticamente copiada de Haskell. Así que muchas cosas van a ser sencillamente idénticas.</p>
+
+<p>De momento, usaremos la orden ghci, que viene a ser el terminal en haskell. Podemos usar operaciones como la suma, la multiplicación.</p>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span> <span class="o">*</span> <span class="mi">3</span>
+</code></pre></div></div>
+
+<p>La división en Haskell no es entera</p>
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="o">#</span> <span class="kt">Ojo</span><span class="p">,</span> <span class="n">es</span> <span class="mf">1.5</span>
+</code></pre></div></div>
+
+<div class="language-haskell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span>
+</code></pre></div></div>
+:ET

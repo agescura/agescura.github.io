@@ -6,3 +6,7 @@ layout: default
 
 [Valores, variables, referencias y constantes](./swift-values-references-constants.html).
 
+# Haskell
+
+[Tipos y funciones en Haskell](./haskell-types.html).
+
