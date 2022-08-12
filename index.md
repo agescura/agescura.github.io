@@ -6,6 +6,8 @@ layout: default
 
 [Valores, variables, referencias y constantes](./swift-values-references-constants.html).
 
+[SwiftUI, Navegación y The Composable Architecture. Primera parte, alertas.](./composable-architecture-alerts.html).
+
 # Haskell
 
 [Tipos y funciones en Haskell](./haskell-types.html).

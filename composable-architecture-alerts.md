@@ -817,3 +817,5 @@ Próxima parte, hablaremos de los sheets y de los popover. Van a tener una forma
 ```
 
 Pero esta vez, como cualquier navegación en TCA, tendremos que ver la forma de derivar dominios a través del Route.
+
+El código de este artículo se encuentra aquí. https://github.com/agescura/composable-architecture-route/tree/main/Examples/TCAlertsInvestigation
