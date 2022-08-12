@@ -4,9 +4,9 @@ layout: default
 
 # SwiftUI, Navegación y The Composable Architecture. Primera parte, alertas.
 
-Antes de empezar a leer este artículo, recomiendo ver la serie de navegación de SwiftUI. Además, no está familiarizado con The Composable Architecture, mejor acceder al repositorio y visionar los Case Studies que hay; son muy buenos, yo aprendí mucho con ellos!
+Antes de empezar a leer este artículo, recomiendo ver <a href="https://www.pointfree.co/collections/swiftui/navigation">la serie de navegación de SwiftUI</a>. Además, si no estás familiarizado con The Composable Architecture, mejor accede al <a href="https://github.com/pointfreeco/swift-composable-architecture">repositorio</a> y mira los Case Studies que hay; son muy buenos!
 
-Por resumir un poco, la solución que ofrece Apple para la navegación en SwiftUI ofrece muchas lagunas. Qué ocurre cuando en una pantalla hay muchas opciones para navegar? Imaginemos que tenemos una pantalla con una alerta para cuando no tenemos conexión de internet, otra alerta para realizar una acción de peligro, un sheet para cuando hay un error en la llamada de internet, una navegación hacia un detalle, etc, etc.
+Por resumir un poco, la solución que ofrece Apple para la navegación en SwiftUI ofrece muchas lagunas. ¿Qué ocurre cuando en una pantalla hay muchas opciones para navegar? Imaginemos que tenemos una pantalla con una alerta para cuando no tenemos conexión de internet, otra alerta para realizar una acción de peligro, un sheet para cuando hay un error en la llamada de internet, una navegación hacia un detalle, etc, etc.
 
 La representación de estos estados en SwiftUI, se haría de una forma similar a esta.
 
@@ -17,7 +17,7 @@ La representación de estos estados en SwiftUI, se haría de una forma similar a
 @Published var navigateToDetail = false
 ```
 
-Pero, haciendo un mapeado de este estilo, estamos incrementando la complejidad accidental de nuestro proyecto añadiendo estados imposibles. ¿Qué ocurriría si tuvieramos un estado así?
+Pero, haciendo un mapeado de este estilo, estamos incrementando la complejidad accidental de nuestro proyecto añadiendo estados imposibles. ¿Qué ocurriría si tuvieramos un estado así? Sería un estado imposible que genera un comportamiento erróneo.
 
 ```swift
 @Published var alertNoInternet = true
@@ -26,7 +26,7 @@ Pero, haciendo un mapeado de este estilo, estamos incrementando la complejidad a
 @Published var navigateToDetail = true
 ```
 
-Nota: En nuevas versiones en SwiftUI, se prefiere utilizar un Binding de un objeto, de forma que si el objeto existe, se lanza la navegación y en caso contrario, se dismisea la pantalla. Esta forma, aunque se simplifica un poco el código porque ya no hace falta controlar la navegación con dos variables, continua siendo engorrosa para el caso de que una pantalla tenga muchas posibilidades de navegación.
+> **_NOTA_** En nuevas versiones en SwiftUI, se prefiere utilizar un Binding de un objeto, en vez de un boleano, de forma que si el objeto existe, se lanza la navegación y en caso contrario, se dismisea la pantalla. Esta forma, aunque se simplifica un poco el código porque ya no hace falta controlar la navegación con dos variables, continua siendo engorrosa para el caso de que una pantalla tenga muchas posibilidades de navegación.
 
 Seguramente el comportamiento de la aplicación no sería el esperado. Pues bien, la solución que nos ofrece Pointfree en la serie de navegación con SwiftUI es mapear la pantalla justamente con los estados suficientes.
 
@@ -43,7 +43,7 @@ enum Route {
 
 Este planteamiento es sencillo y elegante. Además, permite la construcción de un sistema de deeplink de forma sencilla y, más importante aún, modularizable.
 
-Sin embargo, no existe, aún, una solución similar en The Composable Architecture. Pero, mientras estamos esperando, con muchas ganas, que aparezcan ya la integración de la navegación con el TCA, escribo este artículo ofreciendo una solución a este problema.
+Sin embargo, no existe, aún, una solución similar en The Composable Architecture. Pero, mientras estamos esperando, con muchas ganas eso sí, que aparezca ya la integración de la navegación con el TCA, escribo este artículo ofreciendo una solución a este problema. A modo de experimento y diversión.
 
 ## Todo empieza con un proyecto de ejemplo.
 
@@ -76,7 +76,7 @@ struct AppState: Equatable {
 }
 ```
 
-Nota: IdentifiedArrayOf es un array con un identificar UUID, que nos permite realizar búsquedas más eficientemente que con Array.
+> **_Nota_** IdentifiedArrayOf es un array con un identificar UUID, que nos permite realizar búsquedas más eficientemente que con Array.
 
 El siguiente objeto son las acciones que tendrá nuestra aplicación. De momento, solo queremos añadir un número al listado.
 
@@ -151,6 +151,8 @@ AppView(
 )
 ```
 
+Ahora tenemos una app funcional que va añadiendo números aleatorios a un listado.
+
 ## Route
 
 Para añadir una alerta, primero tenemos que crear un Route en el AppState.
@@ -209,7 +211,7 @@ case let .removeAlertButtonTapped(item):
     return .none
 ```
 
-Nota: Este artículo se centra en la navegación pero, para hacer bien esta parte, quizás deberíamos derivar el listado y usar un ForEachStore, de esta forma, no habría necesidad de utilizar acciones que tengan como parámetro el elemento al que queremos borrar.
+> **_Nota_** Este artículo se centra en la navegación pero, para hacer bien esta parte, quizás deberíamos derivar el listado y usar un ForEachStore, de esta forma, no habría necesidad de utilizar acciones que tengan como parámetro el elemento al que queremos borrar.
 
 ## CasePaths, Bindings and Alerts
 
@@ -816,6 +818,6 @@ Próxima parte, hablaremos de los sheets y de los popover. Van a tener una forma
 )
 ```
 
-Pero esta vez, como cualquier navegación en TCA, tendremos que ver la forma de derivar dominios a través del Route.
+Pero esta vez, como cualquier navegación en TCA, tendremos que ver la forma de derivar dominios, esto es, haciendo scope y pullback sobre el route.
 
-El código de este artículo se encuentra aquí. https://github.com/agescura/composable-architecture-route/tree/main/Examples/TCAlertsInvestigation
+El código de este artículo se encuentra <a href="https://github.com/agescura/composable-architecture-route/tree/main/Examples/TCAlertsInvestigation">aquí</a>.
