@@ -4,7 +4,7 @@ layout: default
 
 # SwiftUI, CasePaths y DataSources.
 
-Utilizar CasePaths tiene utilidad únicamente en The Composable Architecture o en el Route de la navegación. Puede utilizarse en multiples escenarios. Uno de ellos puede ser para representar la información que mostraremos en una pantalla en concreto. Veamos un ejemplo práctico.
+Utilizar CasePaths no tiene utilidad únicamente en The Composable Architecture o en el Route de la navegación. Puede utilizarse en multiples escenarios. Uno de ellos puede ser para representar la información que mostraremos en una pantalla en concreto. Veamos un ejemplo práctico.
 
 Empezamos por un objeto Todo.
 
