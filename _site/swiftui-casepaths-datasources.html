@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Albert Gil Escura | Desarrollador de aplicaciones, a veces me da por escribir.</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Albert Gil Escura" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Desarrollador de aplicaciones, a veces me da por escribir." />
+<meta property="og:description" content="Desarrollador de aplicaciones, a veces me da por escribir." />
+<link rel="canonical" href="http://localhost:4000/swiftui-casepaths-datasources.html" />
+<meta property="og:url" content="http://localhost:4000/swiftui-casepaths-datasources.html" />
+<meta property="og:site_name" content="Albert Gil Escura" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Albert Gil Escura" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Desarrollador de aplicaciones, a veces me da por escribir.","headline":"Albert Gil Escura","url":"http://localhost:4000/swiftui-casepaths-datasources.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/colors-auto.css?v=">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+
+    <link rel="preload" href="" as="image">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+
+<!-- Setup Google Analytics -->
+
+
+<!-- You can set your favicon here -->
+
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="sidebar">
+        <header>
+          
+
+          
+            <h1><a href="http://localhost:4000/">Albert Gil Escura</a></h1>
+          
+
+          
+            <p class="addr"><i class="fa-regular fa-envelope"></i>&nbsp;agilescura@gmail.com</p>
+          
+
+          <p>Desarrollador de aplicaciones, a veces me da por escribir.</p>
+
+          <div class="link-wrapper">
+    <style scoped>
+      ul.link a {
+        color:var(--clr-h1-and-bold);
+        text-decoration:none;
+      }
+
+      ul.link a:hover, a:focus {
+        color: var(--clr-a-text-hvr);
+      }
+    </style>
+    <ul class="link">
+    </ul>
+  </div>
+
+
+        </header>
+
+        <div class="link-wrapper-mobile" id="link-wrapper-mobile">
+    <style scoped>
+        #link-wrapper-mobile a {
+        color:var(--clr-h1-and-bold);
+        text-decoration:none;
+        }
+
+        #link-wrapper-mobile a:hover, a:focus {
+        color: var(--clr-a-text-hvr);
+        }
+    </style>
+</div>
+
+
+        <div class="sidebar-footer"><p><small>Powered by <a href="https://jekyllrb.com/">Jekyll</a> &mdash; Theme by <a href="https://www.bodunhu.com/">BDHU</a></small></p></div>
+      </div>
+      <section>
+
+      <h1 id="swiftui-casepaths-y-datasources">SwiftUI, CasePaths y DataSources.</h1>
+
+<p>Utilizar CasePaths tiene utilidad únicamente en The Composable Architecture o en el Route de la navegación. Puede utilizarse en multiples escenarios. Uno de ellos puede ser para representar la información que mostraremos en una pantalla en concreto. Veamos un ejemplo práctico.</p>
+
+<p>Empezamos por un objeto Todo.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">Todo</span><span class="p">:</span> <span class="kt">Identifiable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">UUID</span>
+    <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span>
+    <span class="k">let</span> <span class="nv">price</span><span class="p">:</span> <span class="kt">Double</span>
+    
+    <span class="nf">init</span><span class="p">(</span>
+        <span class="nv">id</span><span class="p">:</span> <span class="kt">UUID</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">(),</span>
+        <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+        <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+        <span class="nv">price</span><span class="p">:</span> <span class="kt">Double</span>
+    <span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">price</span> <span class="o">=</span> <span class="n">price</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Vamos a necesitar representar el precio así que nos crearemos una extension.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">Todo</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">currency</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">formatter</span> <span class="o">=</span> <span class="kt">NumberFormatter</span><span class="p">()</span>
+        <span class="n">formatter</span><span class="o">.</span><span class="n">locale</span> <span class="o">=</span> <span class="kt">Locale</span><span class="o">.</span><span class="n">current</span>
+        <span class="n">formatter</span><span class="o">.</span><span class="n">numberStyle</span> <span class="o">=</span> <span class="o">.</span><span class="n">currency</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">currency</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="nf">string</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">price</span> <span class="k">as</span> <span class="kt">NSNumber</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">currency</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="s">"XX.XX"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Vamos a suponer que tenemos un servicio y nos devolverá un listado de todos.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ApiClient</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">todos</span><span class="p">:</span> <span class="p">()</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Todo</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">ApiClient</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">live</span><span class="p">:</span> <span class="k">Self</span> <span class="p">{</span>
+        <span class="nf">fatalError</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Crearemos una instancia mock, que devolverá unos valores y tendrá un delay de unos segundos.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">ApiClient</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">mock</span> <span class="o">=</span> <span class="kt">Self</span><span class="p">(</span>
+        <span class="nv">todos</span><span class="p">:</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="k">await</span> <span class="kt">Task</span><span class="o">.</span><span class="nf">sleep</span><span class="p">(</span><span class="nv">nanoseconds</span><span class="p">:</span> <span class="kt">NSEC_PER_SEC</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"name 1"</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="s">"description 1"</span><span class="p">,</span> <span class="nv">price</span><span class="p">:</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"name 2"</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="s">"description 2"</span><span class="p">,</span> <span class="nv">price</span><span class="p">:</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"name 3"</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="s">"description 3"</span><span class="p">,</span> <span class="nv">price</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Como usaremos MVVM, necesitaremos un viewModel:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">AppViewModel</span><span class="p">:</span> <span class="kt">ObservableObject</span> <span class="p">{</span>
+    <span class="kd">@Published</span> <span class="k">var</span> <span class="nv">todos</span><span class="p">:</span> <span class="p">[</span><span class="kt">Todo</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">let</span> <span class="nv">apiClient</span><span class="p">:</span> <span class="kt">ApiClient</span> <span class="o">=</span> <span class="o">.</span><span class="n">mock</span>
+    
+    <span class="kd">func</span> <span class="nf">onAppear</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">Task</span> <span class="p">{</span> <span class="kd">@MainActor</span> <span class="k">in</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">todos</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="k">self</span><span class="o">.</span><span class="n">apiClient</span><span class="o">.</span><span class="nf">todos</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Y, por último, actualizaremos la vista y la vista para cada todo.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ContentView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@ObservedObject</span> <span class="k">var</span> <span class="nv">viewModel</span> <span class="o">=</span> <span class="kt">AppViewModel</span><span class="p">()</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">List</span> <span class="p">{</span>
+            <span class="kt">ForEach</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">todos</span><span class="p">)</span> <span class="p">{</span> <span class="n">todo</span> <span class="k">in</span>
+                <span class="kt">TodoView</span><span class="p">(</span><span class="nv">todo</span><span class="p">:</span> <span class="n">todo</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="o">.</span><span class="nf">onAppear</span><span class="p">(</span><span class="nv">perform</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">onAppear</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">TodoView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">todo</span><span class="p">:</span> <span class="kt">Todo</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">HStack</span><span class="p">(</span><span class="nv">alignment</span><span class="p">:</span> <span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="nv">spacing</span><span class="p">:</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">Text</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">todo</span><span class="o">.</span><span class="n">currency</span><span class="p">)</span>
+            <span class="kt">VStack</span><span class="p">(</span><span class="nv">alignment</span><span class="p">:</span> <span class="o">.</span><span class="n">leading</span><span class="p">,</span> <span class="nv">spacing</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kt">Text</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">todo</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="kt">Text</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">todo</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>El código anterior, funciona. Pero, el funcionamiento, es un tanto aburrido. La pantalla permanecerá en blanco, hasta que la llamada termine y devuelva el resultado en forma de listado de todos.</p>
+
+<p>Podríamos estar tentados de agregar más estados a la pantalla en forma de un isLoading mezclado con un ProgressView, por ejemplo. Luego, podríamos agregar un hasError y, finalmente, pondriamos un isEmpty.</p>
+
+<p>Al final estamos, incorporando casuísticas a una pantalla añadiendo más y más estados como variables y incorporando estados imposibles, que no los vamos a necesitar.</p>
+
+<p>Desde el punto de vista del rendimiento, incorporar a una pantalla un número elevado de Published es peligroso ya que son elementos que están constantemente escuchando cualquier cambio para reejecutar el body de la view.</p>
+
+<p>Y, aquí, de nuevo, aparecen los Enums al rescate. La solución pasa por gestionar todos los estados a través de una variable que, de momento, me parece interesante, DataSource, dado que la fuente de los datos, no necesariamente va a venir de una única fuente. El nombre me recuerda al DataSource de una UITableView, así que el nombre me parece adecuado.</p>
+
+<p>Entonces, vayamos ahí.</p>
+
+<h2 id="datasource-redacted">DataSource, redacted</h2>
+
+<p>Lo primero, borra el Published que tenemos en el AppViewModel y añade lo siguiente.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@Published</span> <span class="k">var</span> <span class="nv">dataSource</span><span class="p">:</span> <span class="kt">DataSource</span> <span class="o">=</span> <span class="o">.</span><span class="n">redacted</span>
+    
+<span class="kd">enum</span> <span class="kt">DataSource</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">redacted</span>
+    <span class="k">case</span> <span class="nf">list</span><span class="p">([</span><span class="kt">Todo</span><span class="p">])</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Vamos a tratar dos estados. Cuando la pantalla está cargando y cuando ya tiene los elementos recibidos desde la llamada a la api.</p>
+
+<p>Actualiza la función onAppear:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">onAppear</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="o">.</span><span class="n">redacted</span>
+    
+    <span class="kt">Task</span> <span class="p">{</span> <span class="kd">@MainActor</span> <span class="k">in</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="o">.</span><span class="nf">list</span><span class="p">(</span><span class="k">try</span> <span class="k">await</span> <span class="k">self</span><span class="o">.</span><span class="n">apiClient</span><span class="o">.</span><span class="nf">todos</span><span class="p">())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Para mostrar la pantalla en modo redacted, vamos a necesitar un todo especial.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">Todo</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">redacted</span> <span class="o">=</span> <span class="kt">Self</span><span class="p">(</span>
+        <span class="nv">name</span><span class="p">:</span> <span class="s">"name name"</span><span class="p">,</span>
+        <span class="nv">description</span><span class="p">:</span> <span class="s">"description description"</span><span class="p">,</span>
+        <span class="nv">price</span><span class="p">:</span> <span class="mf">11.11</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Y, luego, necesitaremos una animación interesante. Está sacada de <a href="https://github.com/markiv/SwiftUI-Shimmer">aquí</a></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Shimmer</span><span class="p">:</span> <span class="kt">ViewModifier</span> <span class="p">{</span>
+    <span class="kd">@State</span> <span class="kd">private</span> <span class="k">var</span> <span class="nv">phase</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">var</span> <span class="nv">duration</span> <span class="o">=</span> <span class="mf">1.5</span>
+    <span class="k">var</span> <span class="nv">bounce</span> <span class="o">=</span> <span class="kc">false</span>
+
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">body</span><span class="p">(</span><span class="nv">content</span><span class="p">:</span> <span class="kt">Content</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="n">content</span>
+            <span class="o">.</span><span class="nf">modifier</span><span class="p">(</span><span class="kt">AnimatedMask</span><span class="p">(</span><span class="nv">phase</span><span class="p">:</span> <span class="n">phase</span><span class="p">)</span><span class="o">.</span><span class="nf">animation</span><span class="p">(</span>
+                <span class="kt">Animation</span><span class="o">.</span><span class="nf">linear</span><span class="p">(</span><span class="nv">duration</span><span class="p">:</span> <span class="n">duration</span><span class="p">)</span>
+                    <span class="o">.</span><span class="nf">repeatForever</span><span class="p">(</span><span class="nv">autoreverses</span><span class="p">:</span> <span class="n">bounce</span><span class="p">)</span>
+            <span class="p">))</span>
+            <span class="o">.</span><span class="n">onAppear</span> <span class="p">{</span> <span class="n">phase</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">struct</span> <span class="kt">AnimatedMask</span><span class="p">:</span> <span class="kt">AnimatableModifier</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">phase</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">var</span> <span class="nv">animatableData</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span>
+            <span class="k">get</span> <span class="p">{</span> <span class="n">phase</span> <span class="p">}</span>
+            <span class="k">set</span> <span class="p">{</span> <span class="n">phase</span> <span class="o">=</span> <span class="n">newValue</span> <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="kd">func</span> <span class="nf">body</span><span class="p">(</span><span class="nv">content</span><span class="p">:</span> <span class="kt">Content</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+            <span class="n">content</span>
+                <span class="o">.</span><span class="nf">mask</span><span class="p">(</span>
+                    <span class="kt">GradientMask</span><span class="p">(</span><span class="nv">phase</span><span class="p">:</span> <span class="n">phase</span><span class="p">)</span>
+                        <span class="o">.</span><span class="nf">scaleEffect</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+                <span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">struct</span> <span class="kt">GradientMask</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">phase</span><span class="p">:</span> <span class="kt">CGFloat</span>
+        <span class="k">let</span> <span class="nv">centerColor</span> <span class="o">=</span> <span class="kt">Color</span><span class="o">.</span><span class="n">black</span>
+        <span class="k">let</span> <span class="nv">edgeColor</span> <span class="o">=</span> <span class="kt">Color</span><span class="o">.</span><span class="n">black</span><span class="o">.</span><span class="nf">opacity</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+        
+        <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+            <span class="kt">LinearGradient</span><span class="p">(</span>
+                <span class="nv">gradient</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span>
+                    <span class="nv">stops</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="n">edgeColor</span><span class="p">,</span> <span class="nv">location</span><span class="p">:</span> <span class="n">phase</span><span class="p">),</span>
+                        <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="n">centerColor</span><span class="p">,</span> <span class="nv">location</span><span class="p">:</span> <span class="n">phase</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">),</span>
+                        <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">color</span><span class="p">:</span> <span class="n">edgeColor</span><span class="p">,</span> <span class="nv">location</span><span class="p">:</span> <span class="n">phase</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">)</span>
+                    <span class="p">]</span>
+                <span class="p">),</span>
+                <span class="nv">startPoint</span><span class="p">:</span> <span class="o">.</span><span class="n">topLeading</span><span class="p">,</span>
+                <span class="nv">endPoint</span><span class="p">:</span> <span class="o">.</span><span class="n">bottomTrailing</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="kd">extension</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@ViewBuilder</span> <span class="kd">func</span> <span class="nf">shimmering</span><span class="p">(</span>
+        <span class="nv">duration</span><span class="p">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span>
+        <span class="nv">bounce</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="nf">modifier</span><span class="p">(</span>
+            <span class="kt">Shimmer</span><span class="p">(</span>
+                <span class="nv">duration</span><span class="p">:</span> <span class="n">duration</span><span class="p">,</span>
+                <span class="nv">bounce</span><span class="p">:</span> <span class="n">bounce</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Por último, iremos a la vista y haremos pattern matching sobre el datasource.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ContentView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@ObservedObject</span> <span class="k">var</span> <span class="nv">viewModel</span> <span class="o">=</span> <span class="kt">AppViewModel</span><span class="p">()</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Group</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="k">case</span> <span class="o">.</span><span class="n">redacted</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">dataSource</span> <span class="p">{</span>
+                <span class="kt">List</span> <span class="p">{</span>
+                    <span class="kt">ForEach</span><span class="p">(</span><span class="mi">0</span><span class="o">..&lt;</span><span class="mi">10</span><span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+                        <span class="kt">TodoView</span><span class="p">(</span><span class="nv">todo</span><span class="p">:</span> <span class="kt">Todo</span><span class="o">.</span><span class="n">redacted</span><span class="p">)</span>
+                            <span class="o">.</span><span class="nf">redacted</span><span class="p">(</span><span class="nv">reason</span><span class="p">:</span> <span class="o">.</span><span class="n">placeholder</span><span class="p">)</span>
+                            <span class="o">.</span><span class="nf">shimmering</span><span class="p">()</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">list</span><span class="p">(</span><span class="n">todos</span><span class="p">)</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">dataSource</span> <span class="p">{</span>
+                <span class="kt">List</span> <span class="p">{</span>
+                    <span class="kt">ForEach</span><span class="p">(</span><span class="n">todos</span><span class="p">)</span> <span class="p">{</span> <span class="n">todo</span> <span class="k">in</span>
+                        <span class="kt">TodoView</span><span class="p">(</span><span class="nv">todo</span><span class="p">:</span> <span class="n">todo</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="o">.</span><span class="nf">onAppear</span><span class="p">(</span><span class="nv">perform</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">onAppear</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="casepaths-al-rescate">CasePaths al rescate</h2>
+
+<p>Si no quisieramos utilizar CasePaths, pues listo. Ya habríamos terminado, pero aquí estamos viendo que merece la pena utilizarlos ya que, si estamos usando la navegación con CasePaths, pues es una pena no homogeneizarlo todo.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">IfCaseLet</span><span class="p">(</span>
+    <span class="nv">dataSource</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="n">_</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">case</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="kt">CasePath</span><span class="o">&lt;</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="o">&gt;</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">content</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_</span><span class="err">#</span><span class="o">&gt;</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Nuestra idea sería utilizar esta forma. Le pasamos el enum, le pasamos el case, sacamos el pattern matching y el contenido construye la vista junto con el pattern matching. El IfCaseLet original viene de <a href="https://www.pointfree.co/collections/swiftui/navigation">la serie de navegación de SwiftUI</a>.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">IfCaseLet</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="p">,</span> <span class="kt">Content</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">View</span> <span class="k">where</span> <span class="kt">Content</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">dataSource</span><span class="p">:</span> <span class="kt">Enum</span>
+    <span class="k">let</span> <span class="nv">casePath</span><span class="p">:</span> <span class="kt">CasePath</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="o">&gt;</span>
+    <span class="k">let</span> <span class="nv">content</span><span class="p">:</span> <span class="p">(</span><span class="kt">Case</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Content</span>
+    
+    <span class="nf">init</span><span class="p">(</span>
+        <span class="nv">dataSource</span><span class="p">:</span> <span class="kt">Enum</span><span class="p">,</span>
+        <span class="k">case</span> <span class="nv">casePath</span><span class="p">:</span> <span class="kt">CasePath</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="kd">@ViewBuilder</span> <span class="nv">content</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Case</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Content</span>
+    <span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">casePath</span> <span class="o">=</span> <span class="n">casePath</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
+    <span class="p">}</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="kd">let</span> <span class="p">`</span><span class="nv">case</span><span class="p">`</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">casePath</span><span class="o">.</span><span class="nf">extract</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">dataSource</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="nf">content</span><span class="p">(`</span><span class="nv">case</span><span class="p">`)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Ya podemos actualizar la vista.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">IfCaseLet</span><span class="p">(</span>
+    <span class="nv">dataSource</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">dataSource</span><span class="p">,</span>
+    <span class="nv">case</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppViewModel</span><span class="o">.</span><span class="kt">DataSource</span><span class="o">.</span><span class="n">redacted</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="kt">List</span> <span class="p">{</span>
+        <span class="kt">ForEach</span><span class="p">(</span><span class="mi">0</span><span class="o">..&lt;</span><span class="mi">10</span><span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+            <span class="kt">TodoView</span><span class="p">(</span><span class="nv">todo</span><span class="p">:</span> <span class="kt">Todo</span><span class="o">.</span><span class="n">redacted</span><span class="p">)</span>
+                <span class="o">.</span><span class="nf">redacted</span><span class="p">(</span><span class="nv">reason</span><span class="p">:</span> <span class="o">.</span><span class="n">placeholder</span><span class="p">)</span>
+                <span class="o">.</span><span class="nf">shimmering</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kt">IfCaseLet</span><span class="p">(</span>
+    <span class="nv">dataSource</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">dataSource</span><span class="p">,</span>
+    <span class="nv">case</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppViewModel</span><span class="o">.</span><span class="kt">DataSource</span><span class="o">.</span><span class="n">list</span>
+<span class="p">)</span> <span class="p">{</span> <span class="n">todos</span> <span class="k">in</span>
+    <span class="kt">List</span> <span class="p">{</span>
+        <span class="kt">ForEach</span><span class="p">(</span><span class="n">todos</span><span class="p">)</span> <span class="p">{</span> <span class="n">todo</span> <span class="k">in</span>
+            <span class="kt">TodoView</span><span class="p">(</span><span class="nv">todo</span><span class="p">:</span> <span class="n">todo</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Si quisieramos modularizar un poco, el resultado anterior, podríamos hacer:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">Group</span> <span class="p">{</span>
+    <span class="kt">IfCaseLet</span><span class="p">(</span>
+        <span class="nv">dataSource</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">dataSource</span><span class="p">,</span>
+        <span class="nv">case</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppViewModel</span><span class="o">.</span><span class="kt">DataSource</span><span class="o">.</span><span class="n">redacted</span><span class="p">,</span>
+        <span class="nv">content</span><span class="p">:</span> <span class="kt">RedactedTodoView</span><span class="o">.</span><span class="kd">init</span>
+    <span class="p">)</span>
+    <span class="kt">IfCaseLet</span><span class="p">(</span>
+        <span class="nv">dataSource</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">dataSource</span><span class="p">,</span>
+        <span class="nv">case</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppViewModel</span><span class="o">.</span><span class="kt">DataSource</span><span class="o">.</span><span class="n">list</span><span class="p">,</span>
+        <span class="nv">content</span><span class="p">:</span> <span class="kt">ListTodoView</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">todos</span><span class="p">:)</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="metiendo-más-estados">Metiendo más estados</h2>
+
+<p>Vamos a meter el resto de los estados.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">DataSource</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">redacted</span>
+    <span class="k">case</span> <span class="nf">list</span><span class="p">([</span><span class="kt">Todo</span><span class="p">])</span>
+    <span class="k">case</span> <span class="nf">error</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">empty</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Para simular los estados, necesitamos dos mocks más.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">DomainError</span><span class="p">:</span> <span class="kt">Error</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">unknown</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">ApiClient</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">empty</span> <span class="o">=</span> <span class="kt">Self</span><span class="p">(</span>
+        <span class="nv">todos</span><span class="p">:</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="k">await</span> <span class="kt">Task</span><span class="o">.</span><span class="nf">sleep</span><span class="p">(</span><span class="nv">nanoseconds</span><span class="p">:</span> <span class="kt">NSEC_PER_SEC</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">error</span> <span class="o">=</span> <span class="kt">Self</span><span class="p">(</span>
+        <span class="nv">todos</span><span class="p">:</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="k">await</span> <span class="kt">Task</span><span class="o">.</span><span class="nf">sleep</span><span class="p">(</span><span class="nv">nanoseconds</span><span class="p">:</span> <span class="kt">NSEC_PER_SEC</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">throw</span> <span class="kt">DomainError</span><span class="o">.</span><span class="n">unknown</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Actualizaremos la función onAppear del AppViewModel. Ahora, tenemos que tratar el error, haremos un do catch. Y si el resultado es vacío, hay que asignar el case adecuado.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">onAppear</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="o">.</span><span class="n">redacted</span>
+    
+    <span class="kt">Task</span> <span class="p">{</span> <span class="kd">@MainActor</span> <span class="k">in</span>
+        <span class="k">do</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">todos</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="k">self</span><span class="o">.</span><span class="n">apiClient</span><span class="o">.</span><span class="nf">todos</span><span class="p">()</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="n">todos</span><span class="o">.</span><span class="n">isEmpty</span> <span class="p">?</span> <span class="o">.</span><span class="nv">empty</span> <span class="p">:</span> <span class="o">.</span><span class="nf">list</span><span class="p">(</span><span class="n">todos</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="k">let</span> <span class="nv">error</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="o">.</span><span class="nf">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Además necesitaremos dos vistas más.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ErrorTodoView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">action</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Void</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">VStack</span> <span class="p">{</span>
+            <span class="kt">Text</span><span class="p">(</span><span class="s">"Hubo un error"</span><span class="p">)</span>
+            <span class="kt">Button</span><span class="p">(</span>
+                <span class="nv">action</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">action</span><span class="p">,</span>
+                <span class="nv">label</span><span class="p">:</span> <span class="p">{</span> <span class="kt">Text</span><span class="p">(</span><span class="s">"Reintentar"</span><span class="p">)</span> <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">EmptyTodoView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Text</span><span class="p">(</span><span class="s">"No hay todos"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Finalmente, actualizaremos la vista, agregando los dos estados. Como, en el caso del error, hay un evento, necesitamos implementar el content para conectar la acción del botón con el viewModel y así mantener el Unidirectional Flow.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">IfCaseLet</span><span class="p">(</span>
+    <span class="nv">dataSource</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">dataSource</span><span class="p">,</span>
+    <span class="nv">case</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppViewModel</span><span class="o">.</span><span class="kt">DataSource</span><span class="o">.</span><span class="n">error</span>
+<span class="p">)</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span>
+    <span class="kt">ErrorTodoView</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">onAppear</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kt">IfCaseLet</span><span class="p">(</span>
+    <span class="nv">dataSource</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">viewModel</span><span class="o">.</span><span class="n">dataSource</span><span class="p">,</span>
+    <span class="nv">case</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppViewModel</span><span class="o">.</span><span class="kt">DataSource</span><span class="o">.</span><span class="n">empty</span><span class="p">,</span>
+    <span class="nv">content</span><span class="p">:</span> <span class="kt">EmptyTodoView</span><span class="o">.</span><span class="kd">init</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/img/datasource.gif" alt="yay" /></p>
+
+<h2 id="resultado-y-reflexión">Resultado y reflexión</h2>
+
+<p>El resultado es más que interesante. Hemos podido controlar 4 estados de una forma más o menos escalable. Además, conseguimos controlar la complejidad accidental no agregando casos erroneos o imposibles.</p>
+
+<p>Tenemos un único Published para n estados posibles. Esto simplifica mucho el testing, tanto que es hasta trivial.</p>
+
+<p>Sin embargo, para cada n estados, vamos a necesitar codificar n vistas en la View, lo que hace un poco engorroso. Quizás, habría que estudiar la forma de encapsular el case con el IfCaseLet y no perder la unidireccionalidad en el caso de que un estado tenga acciones, por ejemplo, pensemos en un formulario.</p>
+
+<p>Seguiremos investigando.</p>
+
+
+      </section>
+      <footer><p><small>Powered by <a href="https://jekyllrb.com/">Jekyll</a> &mdash; Theme by <a href="https://www.bodunhu.com/">BDHU</a></small></p></footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+  </body>
+</html>
