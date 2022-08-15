@@ -10,6 +10,8 @@ layout: default
 
 [SwiftUI, CasePaths y DataSources](./swiftui-casepaths-datasources.html).
 
+[SwiftUI, Navegación y The Composable Architecture. Segunda parte, sheets.](./composable-architecture-sheets.html).
+
 # Haskell
 
 [Tipos y funciones en Haskell](./haskell-types.html).

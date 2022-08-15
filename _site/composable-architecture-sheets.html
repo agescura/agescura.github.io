@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Albert Gil Escura | Desarrollador de aplicaciones, a veces me da por escribir.</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Albert Gil Escura" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Desarrollador de aplicaciones, a veces me da por escribir." />
+<meta property="og:description" content="Desarrollador de aplicaciones, a veces me da por escribir." />
+<link rel="canonical" href="/composable-architecture-sheets.html" />
+<meta property="og:url" content="/composable-architecture-sheets.html" />
+<meta property="og:site_name" content="Albert Gil Escura" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Albert Gil Escura" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Desarrollador de aplicaciones, a veces me da por escribir.","headline":"Albert Gil Escura","url":"/composable-architecture-sheets.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/colors-auto.css?v=">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+
+    <link rel="preload" href="" as="image">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+
+<!-- Setup Google Analytics -->
+
+
+<!-- You can set your favicon here -->
+
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="sidebar">
+        <header>
+          
+
+          
+            <h1><a href="/">Albert Gil Escura</a></h1>
+          
+
+          
+            <p class="addr"><i class="fa-regular fa-envelope"></i>&nbsp;agilescura@gmail.com</p>
+          
+
+          <p>Desarrollador de aplicaciones, a veces me da por escribir.</p>
+
+          <div class="link-wrapper">
+    <style scoped>
+      ul.link a {
+        color:var(--clr-h1-and-bold);
+        text-decoration:none;
+      }
+
+      ul.link a:hover, a:focus {
+        color: var(--clr-a-text-hvr);
+      }
+    </style>
+    <ul class="link">
+    </ul>
+  </div>
+
+
+        </header>
+
+        <div class="link-wrapper-mobile" id="link-wrapper-mobile">
+    <style scoped>
+        #link-wrapper-mobile a {
+        color:var(--clr-h1-and-bold);
+        text-decoration:none;
+        }
+
+        #link-wrapper-mobile a:hover, a:focus {
+        color: var(--clr-a-text-hvr);
+        }
+    </style>
+</div>
+
+
+        <div class="sidebar-footer"><p><small>Powered by <a href="https://jekyllrb.com/">Jekyll</a> &mdash; Theme by <a href="https://www.bodunhu.com/">BDHU</a></small></p></div>
+      </div>
+      <section>
+
+      <h1 id="swiftui-navegación-y-the-composable-architecture-segunda-parte-sheets">SwiftUI, Navegación y The Composable Architecture. Segunda parte, sheets.</h1>
+
+<p>En el <a href="https://agescura.github.io/composable-architecture-alerts.html">artículo anterior</a>., se habló de alerts y confirmationDialogs (los antiguos ActionSheets). En el, se tomó la decisión de utilizar la sobrecarga de las alertas y de los confirmation dialog, de la siguiente forma.</p>
+
+<p>La signatura de una alerta es la siguiente:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="nf">alert</span><span class="p">(</span>
+    <span class="nv">route</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="kt">Enum</span><span class="p">?</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">case</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="kt">CasePath</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="o">&gt;</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">send</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="p">(</span><span class="kt">Action</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">onDismiss</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span><span class="err">#</span><span class="o">&gt;</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>La signatura de un confirmation dialog es la siguiente:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="nf">confirmationDialog</span><span class="p">(</span>
+    <span class="nv">route</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="kt">Enum</span><span class="p">?</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">case</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="kt">CasePath</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="o">&gt;</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">titleVisibility</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="kt">Visibility</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">send</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="p">(</span><span class="kt">Action</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">onDismiss</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span><span class="err">#</span><span class="o">&gt;</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Y, en este artículo, lo que buscamos es una signatura para un sheet (y, también para su hermano gemelo, el popover para los iPads).</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="nf">sheet</span><span class="p">(</span>
+    <span class="nv">route</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="kt">Enum</span><span class="p">?</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">case</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="kt">CasePath</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="o">&gt;</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">onDismiss</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">content</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">T</span><span class="err">##</span><span class="p">(</span><span class="kt">Case</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Content</span><span class="err">#</span><span class="o">&gt;</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="un-sheet-a-la-antigua">Un sheet a la antigua</h2>
+
+<p>Empezamos nuestra investigación siguiendo los ejemplos en los casos de estudio que nos ofrece Composable Architecture.</p>
+
+<p>Para ello, iremos rápido, crearemos un componente nuevo AddItem.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">AddItemState</span><span class="p">:</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">Identifiable</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">item</span><span class="p">:</span> <span class="kt">Item</span>
+    
+    <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">UUID</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">id</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">enum</span> <span class="kt">AddItemAction</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nf">change</span><span class="p">(</span><span class="nv">style</span><span class="p">:</span> <span class="kt">Style</span><span class="p">)</span>
+    <span class="k">case</span> <span class="n">incrementButtonTapped</span>
+    <span class="k">case</span> <span class="n">decrementButtonTapped</span>
+    <span class="k">case</span> <span class="n">generateRandomValueButtonTapped</span>
+    <span class="k">case</span> <span class="n">saveButtonTapped</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">AddItemEnvironment</span> <span class="p">{}</span>
+
+<span class="k">let</span> <span class="nv">addItemReducer</span> <span class="o">=</span> <span class="kt">Reducer</span><span class="o">&lt;</span>
+<span class="kt">AddItemState</span><span class="p">,</span>
+<span class="kt">AddItemAction</span><span class="p">,</span>
+<span class="kt">AddItemEnvironment</span>
+<span class="o">&gt;</span> <span class="p">{</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">action</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">change</span><span class="p">(</span><span class="nv">style</span><span class="p">:</span> <span class="n">style</span><span class="p">):</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">style</span> <span class="o">=</span> <span class="n">style</span>
+        <span class="k">return</span> <span class="o">.</span><span class="k">none</span>
+        
+    <span class="k">case</span> <span class="o">.</span><span class="nv">incrementButtonTapped</span><span class="p">:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">value</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="o">.</span><span class="k">none</span>
+        
+    <span class="k">case</span> <span class="o">.</span><span class="nv">decrementButtonTapped</span><span class="p">:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">value</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="o">.</span><span class="k">none</span>
+        
+    <span class="k">case</span> <span class="o">.</span><span class="nv">generateRandomValueButtonTapped</span><span class="p">:</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kt">Int</span><span class="o">.</span><span class="nf">random</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="mi">0</span><span class="o">...</span><span class="mi">100</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">.</span><span class="k">none</span>
+        
+    <span class="k">case</span> <span class="o">.</span><span class="nv">saveButtonTapped</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">.</span><span class="k">none</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">AddItemView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">store</span><span class="p">:</span> <span class="kt">Store</span><span class="o">&lt;</span><span class="kt">AddItemState</span><span class="p">,</span> <span class="kt">AddItemAction</span><span class="o">&gt;</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">WithViewStore</span><span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="n">store</span><span class="p">)</span> <span class="p">{</span> <span class="n">viewStore</span> <span class="k">in</span>
+            <span class="kt">ZStack</span> <span class="p">{</span>
+                <span class="n">viewStore</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="nf">edgesIgnoringSafeArea</span><span class="p">(</span><span class="o">.</span><span class="n">all</span><span class="p">)</span>
+                
+                <span class="kt">VStack</span><span class="p">(</span><span class="nv">spacing</span><span class="p">:</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kt">HStack</span><span class="p">(</span><span class="nv">spacing</span><span class="p">:</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="kt">ForEach</span><span class="p">(</span><span class="kt">Style</span><span class="o">.</span><span class="n">allCases</span><span class="p">,</span> <span class="nv">id</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="n">style</span> <span class="k">in</span>
+                            <span class="kt">Button</span><span class="p">(</span>
+                                <span class="nv">action</span><span class="p">:</span> <span class="p">{</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="nf">change</span><span class="p">(</span><span class="nv">style</span><span class="p">:</span> <span class="n">style</span><span class="p">))</span> <span class="p">},</span>
+                                <span class="nv">label</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="kt">Text</span><span class="p">(</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">style</span><span class="se">)</span><span class="s">"</span><span class="p">))</span>
+                                        <span class="o">.</span><span class="nf">minimumScaleFactor</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+                                        <span class="o">.</span><span class="nf">lineLimit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                                        <span class="o">.</span><span class="nf">whiteBox</span><span class="p">()</span>
+                                <span class="p">}</span>
+                            <span class="p">)</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                    <span class="kt">HStack</span> <span class="p">{</span>
+                        <span class="kt">Button</span><span class="p">(</span>
+                            <span class="nv">action</span><span class="p">:</span> <span class="p">{</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">decrementButtonTapped</span><span class="p">)</span> <span class="p">},</span>
+                            <span class="nv">label</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="kt">Text</span><span class="p">(</span><span class="s">"-"</span><span class="p">)</span>
+                                    <span class="o">.</span><span class="nf">whiteBox</span><span class="p">()</span>
+                            <span class="p">}</span>
+                        <span class="p">)</span>
+                        <span class="kt">Text</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">viewStore</span><span class="o">.</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+                            <span class="o">.</span><span class="nf">whiteBox</span><span class="p">()</span>
+                        <span class="kt">Button</span><span class="p">(</span>
+                            <span class="nv">action</span><span class="p">:</span> <span class="p">{</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">incrementButtonTapped</span><span class="p">)</span> <span class="p">},</span>
+                            <span class="nv">label</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="kt">Text</span><span class="p">(</span><span class="s">"+"</span><span class="p">)</span>
+                                    <span class="o">.</span><span class="nf">whiteBox</span><span class="p">()</span>
+                            <span class="p">}</span>
+                        <span class="p">)</span>
+                    <span class="p">}</span>
+                    <span class="kt">Button</span><span class="p">(</span>
+                        <span class="nv">action</span><span class="p">:</span> <span class="p">{</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">generateRandomValueButtonTapped</span><span class="p">)</span> <span class="p">},</span>
+                        <span class="nv">label</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="kt">Text</span><span class="p">(</span><span class="s">"Generate Random Value"</span><span class="p">)</span>
+                                <span class="o">.</span><span class="nf">whiteBox</span><span class="p">()</span>
+                        <span class="p">}</span>
+                    <span class="p">)</span>
+                    
+                    <span class="kt">Spacer</span><span class="p">()</span>
+                    
+                    <span class="kt">Button</span><span class="p">(</span>
+                        <span class="nv">action</span><span class="p">:</span> <span class="p">{</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">saveButtonTapped</span><span class="p">)</span> <span class="p">},</span>
+                        <span class="nv">label</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="kt">Text</span><span class="p">(</span><span class="s">"Add Item"</span><span class="p">)</span>
+                                <span class="o">.</span><span class="nf">whiteBox</span><span class="p">()</span>
+                        <span class="p">}</span>
+                    <span class="p">)</span>
+                <span class="p">}</span>
+                <span class="o">.</span><span class="nf">padding</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">WhiteBox</span><span class="p">:</span> <span class="kt">ViewModifier</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">body</span><span class="p">(</span><span class="nv">content</span><span class="p">:</span> <span class="kt">Content</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="n">content</span>
+            <span class="o">.</span><span class="nf">foregroundColor</span><span class="p">(</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
+            <span class="o">.</span><span class="nf">frame</span><span class="p">(</span><span class="nv">maxWidth</span><span class="p">:</span> <span class="o">.</span><span class="n">infinity</span><span class="p">)</span>
+            <span class="o">.</span><span class="nf">padding</span><span class="p">()</span>
+            <span class="o">.</span><span class="nf">background</span><span class="p">(</span><span class="kt">Color</span><span class="o">.</span><span class="n">white</span><span class="p">)</span>
+            <span class="o">.</span><span class="nf">cornerRadius</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">whiteBox</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="nf">modifier</span><span class="p">(</span><span class="kt">WhiteBox</span><span class="p">())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">AddItemView_Previews</span><span class="p">:</span> <span class="kt">PreviewProvider</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">previews</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">AddItemView</span><span class="p">(</span>
+            <span class="nv">store</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span>
+                <span class="nv">initialState</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span>
+                    <span class="nv">item</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+                <span class="p">),</span>
+                <span class="nv">reducer</span><span class="p">:</span> <span class="n">addItemReducer</span><span class="p">,</span>
+                <span class="nv">environment</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>En el AddItemState definimos un objeto de tipo Item</li>
+  <li>Crearemos diferentes acciones que nos van a permitir crear un objeto Item como queramos. Estas acciones van a ser locales, es decir, afectan a la pantalla. Salvo guardar el objeto. Esta acción será usada en el appReducer.</li>
+  <li>La navegación no se va a definir dentro de este componente.</li>
+</ul>
+
+<p>Tenemos un error en la definición del objeto Item, lo actualizaremos.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">Item</span><span class="p">:</span> <span class="kt">Identifiable</span><span class="p">,</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">()</span>
+    <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">var</span> <span class="nv">style</span><span class="p">:</span> <span class="kt">Style</span> <span class="o">=</span> <span class="o">.</span><span class="k">none</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>En el AppState, añadimos una referencia nula del estado de AddItemState.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">addItemState</span><span class="p">:</span> <span class="kt">AddItemState</span><span class="p">?</span>
+</code></pre></div></div>
+
+<p>Haremos lo mismo en el AppAction y en e AppReducer. Además, necesitaremos una acción más, la encargada de realizar la acción de presentar el AddItem.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">case</span> <span class="nf">addItem</span><span class="p">(</span><span class="kt">AddItemAction</span><span class="p">)</span>
+<span class="k">case</span> <span class="nf">addItemSheet</span><span class="p">(</span><span class="nv">isPresented</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">case</span> <span class="o">.</span><span class="nv">addItem</span><span class="p">:</span>
+    <span class="k">return</span> <span class="o">.</span><span class="k">none</span>
+
+<span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="nv">isPresented</span><span class="p">:</span> <span class="n">isPresented</span><span class="p">):</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">addItemState</span> <span class="o">=</span> <span class="n">isPresented</span> <span class="p">?</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">item</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">())</span> <span class="p">:</span> <span class="kc">nil</span>
+    <span class="k">return</span> <span class="o">.</span><span class="k">none</span> 
+</code></pre></div></div>
+
+<p>Finalmente, añadiremos un sheet en la vista, de la siguiente forma:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="nf">sheet</span><span class="p">(</span>
+    <span class="nv">isPresented</span><span class="p">:</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">binding</span><span class="p">(</span>
+        <span class="nv">get</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">addItemIsPresented</span><span class="p">,</span>
+        <span class="nv">send</span><span class="p">:</span> <span class="kt">AppAction</span><span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="nv">isPresented</span><span class="p">:)</span>
+    <span class="p">)</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="p">????</span>
+<span class="p">}</span> 
+</code></pre></div></div>
+
+<p>Pero necesitamos derivar la información del dominio global AppView hacia el dominio AddItemView. Para ello, necesitaremos utilizar dos funciones que son el núcleo de TCA. La función scope, permite mapear un dominio global a uno local. Y, la función pullback, permite actualizar un estado local hacia un estado global.</p>
+
+<p>Empezamos por la función pullback, en el appReducer. Tenemos que combinar el appReducer con el addItemReducer, de forma que cuando se actualiza el addItemState o se ejecuta una addItemAction, éstas se sincronicen con el appReducer. La forma es la siguiente:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">appReducer</span><span class="p">:</span> <span class="kt">Reducer</span><span class="o">&lt;</span>
+    <span class="kt">AppState</span><span class="p">,</span>
+    <span class="kt">AppAction</span><span class="p">,</span>
+    <span class="kt">AppEnvironment</span>
+<span class="o">&gt;</span> <span class="o">=</span> <span class="o">.</span><span class="nf">combine</span><span class="p">(</span>
+    <span class="n">addItemReducer</span>
+        <span class="o">.</span><span class="nf">optional</span><span class="p">()</span>
+        <span class="o">.</span><span class="nf">pullback</span><span class="p">(</span>
+            <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">addItemState</span><span class="p">,</span>
+            <span class="nv">action</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppAction</span><span class="o">.</span><span class="n">addItem</span><span class="p">,</span>
+            <span class="nv">environment</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">AppEnvironment</span><span class="p">)</span> <span class="k">in</span> <span class="kt">AddItemEnvironment</span><span class="p">()</span> <span class="p">}</span>
+        <span class="p">),</span>
+    
+    <span class="o">.</span><span class="kd">init</span> <span class="p">{</span> <span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">_</span> <span class="k">in</span>
+        <span class="k">switch</span> <span class="n">action</span> <span class="p">{</span>
+        
+        <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">removeAlertButtonTapped</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="o">...</span>
+        <span class="o">...</span>
+        <span class="o">...</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>la función combine es una higher order reducer que nos permite combinar multiples reducers.</p>
+  </li>
+  <li>
+    <p>como hemos definido el addItemState como optional, necesitamos decirle al addItemReducer que es optional. Esto es especialmente importante, porque cuando implementemos el Route, no necesitaremos un .optional() sino “algo” que verifique el case sea el adecuado y no solamente hacer un unwrap a un estado opcional.</p>
+  </li>
+</ul>
+
+<p>Para hacer scope, vamos a necesitar un objeto especial llamado IfLetStore, donde su comportamiento es similar a la del pullback.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="nf">sheet</span><span class="p">(</span>
+    <span class="nv">isPresented</span><span class="p">:</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">binding</span><span class="p">(</span>
+        <span class="nv">get</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">addItemIsPresented</span><span class="p">,</span>
+        <span class="nv">send</span><span class="p">:</span> <span class="kt">AppAction</span><span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="nv">isPresented</span><span class="p">:)</span>
+    <span class="p">)</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="kt">NavigationView</span> <span class="p">{</span>
+        <span class="kt">IfLetStore</span><span class="p">(</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="nf">scope</span><span class="p">(</span>
+                <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">addItemState</span><span class="p">,</span>
+                <span class="nv">action</span><span class="p">:</span> <span class="kt">AppAction</span><span class="o">.</span><span class="n">addItem</span>
+            <span class="p">)</span>
+        <span class="p">)</span> <span class="p">{</span>
+            <span class="kt">AddItemView</span><span class="p">(</span><span class="nv">store</span><span class="p">:</span> <span class="nv">$0</span><span class="p">)</span>
+                <span class="o">.</span><span class="nf">navigationBarTitle</span><span class="p">(</span><span class="s">"Add Item"</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">toolbar</span> <span class="p">{</span>
+                    <span class="kt">ToolbarItem</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">placement</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationBarLeading</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="kt">Text</span><span class="p">(</span><span class="s">"Hay </span><span class="se">\(</span><span class="n">viewStore</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">count</span><span class="se">)</span><span class="s"> items"</span><span class="p">)</span>
+                    <span class="p">}</span>
+                    <span class="kt">ToolbarItem</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">placement</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationBarTrailing</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="kt">Button</span><span class="p">(</span>
+                            <span class="nv">action</span><span class="p">:</span> <span class="p">{</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="nv">isPresented</span><span class="p">:</span> <span class="kc">false</span><span class="p">))</span> <span class="p">},</span>
+                            <span class="nv">label</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="kt">Image</span><span class="p">(</span><span class="nv">systemName</span><span class="p">:</span> <span class="s">"xmark"</span><span class="p">)</span>
+                                    <span class="o">.</span><span class="nf">foregroundColor</span><span class="p">(</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
+                            <span class="p">}</span>
+                        <span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>En el enum Style, para que se vea un poquito mejor, pongamos en el case .none un gris casi transparente.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">case</span> <span class="o">.</span><span class="nv">none</span><span class="p">:</span>
+    <span class="k">return</span> <span class="o">.</span><span class="n">gray</span><span class="o">.</span><span class="nf">opacity</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>El botón de guardar del AddItemView no hace nada. Vamos a poner esta funcionalidad en el AppView, de la siguiente forma:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">case</span> <span class="o">.</span><span class="nf">addItem</span><span class="p">(</span><span class="o">.</span><span class="n">saveButtonTapped</span><span class="p">):</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">item</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">addItemState</span><span class="p">?</span><span class="o">.</span><span class="n">item</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="o">.</span><span class="k">none</span> <span class="p">}</span>
+    
+    <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">addItemState</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="k">return</span> <span class="o">.</span><span class="k">none</span>
+
+<span class="k">case</span> <span class="o">.</span><span class="nv">addItem</span><span class="p">:</span>
+    <span class="k">return</span> <span class="o">.</span><span class="k">none</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong><em>NOTA</em></strong> En vez de asignar a nil el addItemState podríamos lanzar un side effect hacia la action que se responsabiliza de la navegación.</p>
+</blockquote>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">case</span> <span class="o">.</span><span class="nf">addItem</span><span class="p">(</span><span class="o">.</span><span class="n">saveButtonTapped</span><span class="p">):</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">item</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">addItemState</span><span class="p">?</span><span class="o">.</span><span class="n">item</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="o">.</span><span class="k">none</span> <span class="p">}</span>
+    
+    <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kt">Effect</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="nv">isPresented</span><span class="p">:</span> <span class="kc">false</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Pero, en realidad, el problema de fondo lo tenemos, con el modelo de datos.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">route</span><span class="p">:</span> <span class="kt">Route</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="k">var</span> <span class="nv">addItemState</span><span class="p">:</span> <span class="kt">AddItemState</span><span class="p">?</span>
+<span class="k">var</span> <span class="nv">addItemIsPresented</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">self</span><span class="o">.</span><span class="n">addItemState</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Estamos usando un Route para las alertas y los confirmation dialogs, pero, sin embargo, necesitamos, hasta dos variables para gestionar un sheet.</p>
+
+<p>En el Route, añadiremos un nuevo case.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">Route</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nf">removeItemAlert</span><span class="p">(</span><span class="kt">ActionViewModel</span><span class="o">&lt;</span><span class="kt">AppAction</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">changeStyleConfirmationDialog</span><span class="p">(</span><span class="kt">ActionViewModel</span><span class="o">&lt;</span><span class="kt">AppAction</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">addItemSheet</span><span class="p">(</span><span class="kt">AddItemState</span><span class="p">)</span>
+    
+    <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="k">Self</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="k">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="k">let</span> <span class="p">(</span><span class="err">.</span><span class="nv">removeItemAlert</span><span class="p">(</span><span class="nv">lhsAlert</span><span class="p">),</span> <span class="err">.</span><span class="nv">removeItemAlert</span><span class="p">(</span><span class="nv">rhsAlert</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">lhsAlert</span> <span class="o">==</span> <span class="n">rhsAlert</span>
+        <span class="k">case</span> <span class="k">let</span> <span class="p">(</span><span class="err">.</span><span class="nv">changeStyleConfirmationDialog</span><span class="p">(</span><span class="nv">lhsAlert</span><span class="p">),</span> <span class="err">.</span><span class="nv">changeStyleConfirmationDialog</span><span class="p">(</span><span class="nv">rhsAlert</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">lhsAlert</span> <span class="o">==</span> <span class="n">rhsAlert</span>
+        <span class="k">case</span> <span class="k">let</span> <span class="p">(</span><span class="err">.</span><span class="nv">addItemSheet</span><span class="p">(</span><span class="nv">lhsViewModel</span><span class="p">),</span> <span class="err">.</span><span class="nv">addItemSheet</span><span class="p">(</span><span class="nv">rhsViewModel</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">lhsViewModel</span> <span class="o">==</span> <span class="n">rhsViewModel</span>
+        <span class="k">default</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Pero, para poder derivar, el dominio, con TCA solo tenemos .optional(). Entonces, necesitamos actualizar la property addItemState.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">addItemState</span><span class="p">:</span> <span class="kt">AddItemState</span><span class="p">?</span> <span class="p">{</span>
+    <span class="k">get</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="n">viewModel</span><span class="p">)</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">route</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="n">viewModel</span>
+    <span class="p">}</span>
+    <span class="k">set</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">newValue</span> <span class="o">=</span> <span class="n">newValue</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">route</span> <span class="o">=</span> <span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="n">newValue</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Esta vez, addItemState se genera gracias al route. Ahora, actualiza la acción addItemSheet(isPresented: Bool), por esta:</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="n">sheet</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="p">,</span> <span class="kt">Content</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">route</span> <span class="nv">optionalValue</span><span class="p">:</span> <span class="kt">Enum</span><span class="p">?,</span>
+        <span class="k">case</span> <span class="nv">casePath</span><span class="p">:</span> <span class="kt">CasePath</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="nv">onDismiss</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="kd">@ViewBuilder</span> <span class="nv">content</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Case</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Content</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="k">where</span> <span class="kt">Case</span><span class="p">:</span> <span class="kt">Identifiable</span><span class="p">,</span> <span class="kt">Content</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">pattern</span> <span class="o">=</span> <span class="kt">Binding</span><span class="o">.</span><span class="nf">constant</span><span class="p">(</span><span class="n">optionalValue</span><span class="p">)</span><span class="o">.</span><span class="k">case</span><span class="p">(</span><span class="n">casePath</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="nf">sheet</span><span class="p">(</span>
+            <span class="nv">isPresented</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span>
+                <span class="nv">get</span><span class="p">:</span> <span class="p">{</span> <span class="n">pattern</span><span class="o">.</span><span class="n">wrappedValue</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">},</span>
+                <span class="nv">set</span><span class="p">:</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span> <span class="p">}</span>
+            <span class="p">),</span>
+            <span class="nv">onDismiss</span><span class="p">:</span> <span class="n">onDismiss</span>
+        <span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">wrappedValue</span> <span class="p">{</span>
+                <span class="nf">content</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="n">popover</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="p">,</span> <span class="kt">Content</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">route</span> <span class="nv">optionalValue</span><span class="p">:</span> <span class="kt">Enum</span><span class="p">?,</span>
+        <span class="k">case</span> <span class="nv">casePath</span><span class="p">:</span> <span class="kt">CasePath</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="nv">onDismiss</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="kd">@ViewBuilder</span> <span class="nv">content</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Case</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Content</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="k">where</span> <span class="kt">Case</span><span class="p">:</span> <span class="kt">Identifiable</span><span class="p">,</span> <span class="kt">Content</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">pattern</span> <span class="o">=</span> <span class="kt">Binding</span><span class="o">.</span><span class="nf">constant</span><span class="p">(</span><span class="n">optionalValue</span><span class="p">)</span><span class="o">.</span><span class="k">case</span><span class="p">(</span><span class="n">casePath</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="nf">popover</span><span class="p">(</span>
+            <span class="nv">isPresented</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span>
+                <span class="nv">get</span><span class="p">:</span> <span class="p">{</span> <span class="n">pattern</span><span class="o">.</span><span class="n">wrappedValue</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">},</span>
+                <span class="nv">set</span><span class="p">:</span> <span class="p">{</span> <span class="n">isPresented</span> <span class="k">in</span>
+                    <span class="nf">onDismiss</span><span class="p">?()</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">wrappedValue</span> <span class="p">{</span>
+                <span class="nf">content</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>En la vista, tendremos esto.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">.</span><span class="nf">sheet</span><span class="p">(</span>
+    <span class="nv">route</span><span class="p">:</span> <span class="n">viewStore</span><span class="o">.</span><span class="n">route</span><span class="p">,</span>
+    <span class="nv">case</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppState</span><span class="o">.</span><span class="kt">Route</span><span class="o">.</span><span class="n">addItemSheet</span><span class="p">,</span>
+    <span class="nv">onDismiss</span><span class="p">:</span> <span class="p">{</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">dismissButtonTapped</span><span class="p">)</span> <span class="p">},</span>
+    <span class="nv">content</span><span class="p">:</span> <span class="p">{</span> <span class="n">addItemState</span> <span class="k">in</span>
+        <span class="kt">NavigationView</span> <span class="p">{</span>
+            <span class="kt">AddItemView</span><span class="p">(</span>
+                <span class="nv">store</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="nf">scope</span><span class="p">(</span>
+                    <span class="nv">state</span><span class="p">:</span> <span class="p">{</span> <span class="n">_</span> <span class="k">in</span> <span class="n">addItemState</span> <span class="p">},</span>
+                    <span class="nv">action</span><span class="p">:</span> <span class="kt">AppAction</span><span class="o">.</span><span class="n">addItem</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="nf">navigationBarTitle</span><span class="p">(</span><span class="s">"Add Item"</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">toolbar</span> <span class="p">{</span>
+                <span class="kt">ToolbarItem</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">placement</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationBarLeading</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kt">Text</span><span class="p">(</span><span class="s">"Hay </span><span class="se">\(</span><span class="n">viewStore</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">count</span><span class="se">)</span><span class="s"> items"</span><span class="p">)</span>
+                <span class="p">}</span>
+                <span class="kt">ToolbarItem</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">placement</span><span class="p">:</span> <span class="o">.</span><span class="n">navigationBarTrailing</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="kt">Button</span><span class="p">(</span>
+                        <span class="nv">action</span><span class="p">:</span> <span class="p">{</span> <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">dismissButtonTapped</span><span class="p">)</span> <span class="p">},</span>
+                        <span class="nv">label</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="kt">Image</span><span class="p">(</span><span class="nv">systemName</span><span class="p">:</span> <span class="s">"xmark"</span><span class="p">)</span>
+                                <span class="o">.</span><span class="nf">foregroundColor</span><span class="p">(</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
+                        <span class="p">}</span>
+                    <span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Pues ya lo tendríamos, pero aquí tenemos varios casos de investigación pendientes.</p>
+
+<h2 id="optionalpaths">OptionalPaths</h2>
+
+<p>Para la construcción de un local domain para AddItemState, necesitamos crear una computed property.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">addItemState</span><span class="p">:</span> <span class="kt">AddItemState</span><span class="p">?</span> <span class="p">{</span>
+    <span class="k">get</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="n">viewModel</span><span class="p">)</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">route</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="n">viewModel</span>
+    <span class="p">}</span>
+    <span class="k">set</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">newValue</span> <span class="o">=</span> <span class="n">newValue</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">route</span> <span class="o">=</span> <span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="n">newValue</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Para cada case, esto sería, realmente, verboso y poco ergonómico. Una posible solución sería utilizar OptionalPaths. Se encuentran <a href="https://github.com/pointfreeco/isowords/blob/37102baec1d49574c596595e3c82985672762418/Sources/TcaHelpers/OptionalPaths.swift">aquí</a>, en la aplicación Isowords.</p>
+
+<p>Esto no forma parte, aún de TCA, por lo que su uso, o algo similar, aparecerá en breve en TCA.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">addItemReducer</span>
+    <span class="o">.</span><span class="nf">_pullback</span><span class="p">(</span>
+        <span class="nv">state</span><span class="p">:</span> <span class="p">(\</span><span class="kt">AppState</span><span class="o">.</span><span class="n">route</span><span class="p">)</span><span class="o">.</span><span class="nf">appending</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppState</span><span class="o">.</span><span class="kt">Route</span><span class="o">.</span><span class="n">addItemSheet</span><span class="p">),</span>
+        <span class="nv">action</span><span class="p">:</span> <span class="o">/</span><span class="kt">AppAction</span><span class="o">.</span><span class="n">addItem</span><span class="p">,</span>
+        <span class="nv">environment</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">_</span><span class="p">:</span> <span class="kt">AppEnvironment</span><span class="p">)</span> <span class="k">in</span> <span class="kt">AddItemEnvironment</span><span class="p">()</span> <span class="p">}</span>
+    <span class="p">),</span>
+</code></pre></div></div>
+
+<p>Ahora ya podemos borrar del AppState, la computed property addItemState.</p>
+
+<p>Tendremos un error en el action saveButtonTapped.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">case</span> <span class="o">.</span><span class="nf">addItem</span><span class="p">(</span><span class="o">.</span><span class="n">saveButtonTapped</span><span class="p">):</span>
+    <span class="k">guard</span> <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="n">addItemState</span><span class="p">)</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">route</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="o">.</span><span class="k">none</span> <span class="p">}</span>
+    
+    <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">addItemState</span><span class="o">.</span><span class="n">item</span><span class="p">)</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">route</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="k">return</span> <span class="o">.</span><span class="k">none</span>
+</code></pre></div></div>
+
+<p>La aplicación funciona exactamente igual que antes. Aquí entramos en la discusión de si es mejor utilizar OptionalPaths o crear una computed property por cada local domain que creemos.</p>
+
+<h2 id="por-que-no-usamos-sheetitemcontent">¿Por que no usamos sheet(item:content:)?</h2>
+
+<p>Pues hecho.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="n">sheet</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="p">,</span> <span class="kt">Content</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">route</span> <span class="nv">optionalValue</span><span class="p">:</span> <span class="kt">Enum</span><span class="p">?,</span>
+        <span class="k">case</span> <span class="nv">casePath</span><span class="p">:</span> <span class="kt">CasePath</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="nv">onDismiss</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="kd">@ViewBuilder</span> <span class="nv">content</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Case</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Content</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="k">where</span> <span class="kt">Case</span><span class="p">:</span> <span class="kt">Identifiable</span><span class="p">,</span> <span class="kt">Content</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">pattern</span> <span class="o">=</span> <span class="kt">Binding</span><span class="o">.</span><span class="nf">constant</span><span class="p">(</span><span class="n">optionalValue</span><span class="p">)</span><span class="o">.</span><span class="k">case</span><span class="p">(</span><span class="n">casePath</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="nf">sheet</span><span class="p">(</span>
+            <span class="nv">item</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span>
+                <span class="nv">get</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="k">guard</span> <span class="k">let</span> <span class="nv">item</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">wrappedValue</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+                    <span class="k">return</span> <span class="n">item</span>
+                <span class="p">},</span>
+                <span class="nv">set</span><span class="p">:</span> <span class="p">{</span> <span class="n">isPresented</span> <span class="k">in</span>
+                    <span class="k">if</span> <span class="n">isPresented</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+                        <span class="nf">onDismiss</span><span class="p">?()</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">),</span>
+            <span class="nv">content</span><span class="p">:</span> <span class="n">content</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="n">popover</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="p">,</span> <span class="kt">Content</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">route</span> <span class="nv">optionalValue</span><span class="p">:</span> <span class="kt">Enum</span><span class="p">?,</span>
+        <span class="k">case</span> <span class="nv">casePath</span><span class="p">:</span> <span class="kt">CasePath</span><span class="o">&lt;</span><span class="kt">Enum</span><span class="p">,</span> <span class="kt">Case</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="nv">onDismiss</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="nv">attachmentAnchor</span><span class="p">:</span> <span class="kt">PopoverAttachmentAnchor</span> <span class="o">=</span> <span class="o">.</span><span class="nf">rect</span><span class="p">(</span><span class="o">.</span><span class="n">bounds</span><span class="p">),</span>
+        <span class="nv">arrowEdge</span><span class="p">:</span> <span class="kt">Edge</span> <span class="o">=</span> <span class="o">.</span><span class="n">top</span><span class="p">,</span>
+        <span class="kd">@ViewBuilder</span> <span class="nv">content</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Case</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Content</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kd">some</span> <span class="kt">View</span> <span class="k">where</span> <span class="kt">Case</span><span class="p">:</span> <span class="kt">Identifiable</span><span class="p">,</span> <span class="kt">Content</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">pattern</span> <span class="o">=</span> <span class="kt">Binding</span><span class="o">.</span><span class="nf">constant</span><span class="p">(</span><span class="n">optionalValue</span><span class="p">)</span><span class="o">.</span><span class="k">case</span><span class="p">(</span><span class="n">casePath</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="k">self</span><span class="o">.</span><span class="nf">popover</span><span class="p">(</span>
+            <span class="nv">item</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span>
+                <span class="nv">get</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="k">guard</span> <span class="k">let</span> <span class="nv">item</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">wrappedValue</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="kc">nil</span> <span class="p">}</span>
+                    <span class="k">return</span> <span class="n">item</span>
+                <span class="p">},</span>
+                <span class="nv">set</span><span class="p">:</span> <span class="p">{</span> <span class="n">isPresented</span> <span class="k">in</span>
+                    <span class="k">if</span> <span class="n">isPresented</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+                        <span class="nf">onDismiss</span><span class="p">?()</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">),</span>
+            <span class="nv">attachmentAnchor</span><span class="p">:</span> <span class="n">attachmentAnchor</span><span class="p">,</span>
+            <span class="nv">arrowEdge</span><span class="p">:</span> <span class="n">arrowEdge</span><span class="p">,</span>
+            <span class="nv">content</span><span class="p">:</span> <span class="n">content</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="qué-ocurre-si-queremos-actualizar-el-globalstate-a-través-del-localstate">¿Qué ocurre si queremos actualizar el GlobalState a través del LocalState?</h2>
+
+<p>Este es uno de los problemas. Quien se actualiza es el route. Una posible solución sería esta.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">route</span><span class="p">:</span> <span class="kt">Route</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span> <span class="p">{</span>
+    <span class="k">didSet</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">addItemSheet</span><span class="p">(</span><span class="n">addItemState</span><span class="p">)</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">route</span> <span class="p">{</span>
+            <span class="c1">// Update State</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Quizás deberíamos valorar si hoy en dia interesa utilizar el OptionalPath o bien seguir usando computed properties para generar local domains con optional states a través del reducer. Seguro que en breve, nos ofrecen la clave de este problema.</p>
+
+<p>Próximo parte, navigation links y navigation stacks.</p>
+
+
+      </section>
+      <footer><p><small>Powered by <a href="https://jekyllrb.com/">Jekyll</a> &mdash; Theme by <a href="https://www.bodunhu.com/">BDHU</a></small></p></footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+  </body>
+</html>
