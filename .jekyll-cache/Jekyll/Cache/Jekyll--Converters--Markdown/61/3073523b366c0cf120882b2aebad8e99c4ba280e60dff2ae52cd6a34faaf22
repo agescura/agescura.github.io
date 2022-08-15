@@ -1,4 +1,4 @@
-I"�<h1 id="swiftui-navegación-y-the-composable-architecture-segunda-parte-sheets">SwiftUI, Navegación y The Composable Architecture. Segunda parte, sheets.</h1>
+I"�<h1 id="swiftui-navegación-y-the-composable-architecture-segunda-parte-sheets">SwiftUI, Navegación y The Composable Architecture. Segunda parte, sheets.</h1>
 
 <p>En el <a href="https://agescura.github.io/composable-architecture-alerts.html">artículo anterior</a>., se habló de alerts y confirmationDialogs (los antiguos ActionSheets). En el, se tomó la decisión de utilizar la sobrecarga de las alertas y de los confirmation dialog, de la siguiente forma.</p>
 
@@ -577,6 +577,8 @@
 </code></pre></div></div>
 
 <p>Quizás deberíamos valorar si hoy en dia interesa utilizar el OptionalPath o bien seguir usando computed properties para generar local domains con optional states a través del reducer. Seguro que en breve, nos ofrecen la clave de este problema.</p>
+
+<p>El código de este artículo se encuentra <a href="https://github.com/agescura/composable-architecture-route/tree/main/Examples/TCASheetsInvestigation">aquí</a>.</p>
 
 <p>Próximo parte, navigation links y navigation stacks.</p>
 :ET

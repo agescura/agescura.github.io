@@ -599,4 +599,6 @@ var route: Route? = nil {
 
 Quizás deberíamos valorar si hoy en dia interesa utilizar el OptionalPath o bien seguir usando computed properties para generar local domains con optional states a través del reducer. Seguro que en breve, nos ofrecen la clave de este problema.
 
+El código de este artículo se encuentra <a href="https://github.com/agescura/composable-architecture-route/tree/main/Examples/TCASheetsInvestigation">aquí</a>.
+
 Próximo parte, navigation links y navigation stacks.
