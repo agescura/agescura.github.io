@@ -1,0 +1,306 @@
+I"��<h1 id="snapshot-testing-y-tca">Snapshot Testing y TCA.</h1>
+
+<p>Una de los puntos fuertes en The Composable Architecture es el testing. La clase TestStore nos permite realizar un testing al 100% de cobertura del sistema que estamos construyendo. Sin embargo, SwiftUI no permite realizar un test para comprobar la buena disposición visual de cada uno de los objetos.</p>
+
+<p>Una posibilidad es realizar un test a modo de captura de imágen, en otras palabras, hacer una foto del estado actual de la aplicación allí donde queramos. Esto se soluciona con Snapshot Testing, otro de los repositorios más usados por PointFree.</p>
+
+<p>Por ejemplo, si tuvieramos una feature, por ejemplo, el típico contador, podríamos hacer un snapshot de la siguiente forma.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">testSnapshot</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="kt">CounterView</span><span class="p">(</span>
+        <span class="nv">store</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(</span>
+            <span class="nv">initialState</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(),</span>
+            <span class="nv">reducer</span><span class="p">:</span> <span class="n">counterReducer</span><span class="p">,</span>
+            <span class="nv">environment</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="k">let</span> <span class="nv">vc</span> <span class="o">=</span> <span class="kt">UIHostingController</span><span class="p">(</span><span class="nv">rootView</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span>
+    <span class="n">vc</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="kt">UIScreen</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">bounds</span>
+    <span class="nf">assertSnapshot</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="n">vc</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="o">.</span><span class="n">image</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Pero ahora tenemos un problema porque al instanciar la vista necesitamos acceder a su viewStore para realizar un incrementButtonTapped o un decrementButtonTapped. Existe un truco que es construir un viewStore derivando su propio store hacia uno vacío.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">testSnapshot</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">Store</span><span class="p">(</span>
+        <span class="nv">initialState</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(),</span>
+        <span class="nv">reducer</span><span class="p">:</span> <span class="n">counterReducer</span><span class="p">,</span>
+        <span class="nv">environment</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="kt">CounterView</span><span class="p">(</span><span class="nv">store</span><span class="p">:</span> <span class="n">store</span><span class="p">)</span>
+    
+    <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">viewStore</span> <span class="o">=</span> <span class="kt">ViewStore</span><span class="p">(</span>
+        <span class="n">store</span><span class="o">.</span><span class="nf">scope</span><span class="p">(</span><span class="nv">state</span><span class="p">:</span> <span class="p">{</span> <span class="n">_</span> <span class="nf">in</span> <span class="p">()</span> <span class="p">}),</span>
+        <span class="nv">removeDuplicates</span><span class="p">:</span> <span class="o">==</span>
+    <span class="p">)</span>
+    
+    <span class="k">let</span> <span class="nv">vc</span> <span class="o">=</span> <span class="kt">UIHostingController</span><span class="p">(</span><span class="nv">rootView</span><span class="p">:</span> <span class="n">view</span><span class="p">)</span>
+    <span class="n">vc</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="kt">UIScreen</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">bounds</span>
+    <span class="nf">assertSnapshot</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="n">vc</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="o">.</span><span class="n">image</span><span class="p">)</span>
+    
+    <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">incrementButtonTapped</span><span class="p">)</span>
+    <span class="nf">assertSnapshot</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="n">vc</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="o">.</span><span class="n">image</span><span class="p">)</span>
+    
+    <span class="n">viewStore</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">decrementButtonTapped</span><span class="p">)</span>
+    <span class="nf">assertSnapshot</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="n">vc</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="o">.</span><span class="n">image</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>De esta forma, podemos crear 3 snapshots y así consiguiendo una cobertura buena para los elementos visuales en SwiftUI.</p>
+
+<h2 id="teststore">TestStore</h2>
+
+<p>Nos quedaría ahora validar que los estados internos se testeen. Esto es, utilizar la clase TestStore para asegurarnos que la feature funciona.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">testHappyPath</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">TestStore</span><span class="p">(</span>
+        <span class="nv">initialState</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(),</span>
+        <span class="nv">reducer</span><span class="p">:</span> <span class="n">counterReducer</span><span class="p">,</span>
+        <span class="nv">environment</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+    <span class="p">)</span>
+    
+    <span class="n">store</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">incrementButtonTapped</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$0</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    
+    <span class="n">store</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">decrementButtonTapped</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$0</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Si observamos ambos tests. ¿No estamos haciendo lo mismo? Entonces, ¿podríamos intentar juntar ambos tests para no repetir la misma funcionalidad y realizar un solo test que nos compruebe los cambios de estado y luego la parte visual de esos cambios?</p>
+
+<p>La respuesta es, si se puede.</p>
+
+<h2 id="snapshot-testing-dentro-de-tca">Snapshot Testing dentro de TCA</h2>
+
+<p>Tenemos que extender los metodos send y receive de la clase TestStore.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">TestStore</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">receive</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
+    
+    <span class="kd">func</span> <span class="nf">send</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>La signatura del método send es el siguiente</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@MainActor</span>
+<span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">send</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ScopedAction</span><span class="p">,</span>
+    <span class="n">_</span> <span class="nv">updateExpectingResult</span><span class="p">:</span> <span class="p">((</span><span class="k">inout</span> <span class="kt">ScopedState</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+    <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span>
+<span class="p">)</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">TestStoreTask</span>
+</code></pre></div></div>
+
+<p>Vamos a usar exactamente la misma signatura.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">TestStore</span> <span class="k">where</span> <span class="kt">Action</span><span class="p">:</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">ScopedState</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="kd">@MainActor</span>
+    <span class="kd">@discardableResult</span>
+    <span class="kd">func</span> <span class="nf">send</span><span class="p">(</span>
+        <span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ScopedAction</span><span class="p">,</span>
+        <span class="n">_</span> <span class="nv">updateExpectingResult</span><span class="p">:</span> <span class="p">((</span><span class="k">inout</span> <span class="kt">ScopedState</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+        <span class="nv">testName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span>
+        <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span>
+    <span class="p">)</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">TestStoreTask</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Ahora viene lo más importante. Para cada acción enviada o recibida, queremos levantar la vista a la que pertenece ese TestStore y así poder hacer una foto. Necesitaremos construir la vista a partir de la store, es decir, una función que reciba un Store y devuelva la vista que se construye a partir de esta Store.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="kt">Store</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">V</span>
+</code></pre></div></div>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">TestStore</span> <span class="k">where</span> <span class="kt">Action</span><span class="p">:</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">ScopedState</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="kd">@MainActor</span>
+    <span class="kd">@discardableResult</span>
+    <span class="kd">func</span> <span class="n">send</span><span class="o">&lt;</span><span class="kt">V</span><span class="p">:</span> <span class="kt">View</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ScopedAction</span><span class="p">,</span>
+        <span class="n">_</span> <span class="nv">updateExpectingResult</span><span class="p">:</span> <span class="p">((</span><span class="k">inout</span> <span class="kt">ScopedState</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="nv">view</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">V</span><span class="p">,</span>
+        <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+        <span class="nv">testName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span>
+        <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span>
+    <span class="p">)</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">TestStoreTask</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Ahora ya teniendo todos los parámetros definidos, ya podemos implementar la función send.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">TestStore</span> <span class="k">where</span> <span class="kt">Action</span><span class="p">:</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">ScopedState</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="kd">@MainActor</span>
+    <span class="kd">@discardableResult</span>
+    <span class="kd">func</span> <span class="n">send</span><span class="o">&lt;</span><span class="kt">V</span><span class="p">:</span> <span class="kt">View</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ScopedAction</span><span class="p">,</span>
+        <span class="nv">view</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">V</span><span class="p">,</span>
+        <span class="n">_</span> <span class="nv">updateExpectingResult</span><span class="p">:</span> <span class="p">((</span><span class="k">inout</span> <span class="kt">ScopedState</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+        <span class="nv">testName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span>
+        <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span>
+    <span class="p">)</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">TestStoreTask</span> <span class="p">{</span>
+        <span class="k">await</span> <span class="nf">send</span><span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="p">{</span> <span class="n">state</span> <span class="k">in</span>
+            <span class="k">do</span> <span class="p">{</span>
+                <span class="k">try</span> <span class="nf">updateExpectingResult</span><span class="p">?(</span><span class="o">&amp;</span><span class="n">state</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+                <span class="kt">XCTFail</span><span class="p">(</span><span class="s">"Threw error: </span><span class="se">\(</span><span class="n">error</span><span class="se">)</span><span class="s">"</span><span class="p">,</span> <span class="nv">file</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="n">line</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">initialState</span><span class="p">:</span> <span class="n">state</span><span class="p">,</span> <span class="nv">reducer</span><span class="p">:</span> <span class="o">.</span><span class="n">empty</span><span class="p">,</span> <span class="nv">environment</span><span class="p">:</span> <span class="p">())</span>
+            <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="nf">view</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+            <span class="nf">assertSnapshot</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="n">view</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="o">.</span><span class="nf">image</span><span class="p">(</span><span class="nv">layout</span><span class="p">:</span> <span class="o">.</span><span class="nf">device</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="o">.</span><span class="n">iPhone13</span><span class="p">)))</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Ahora, podríamos actualizar el test happyPath anterior.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">testHappyPath</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">TestStore</span><span class="p">(</span>
+        <span class="nv">initialState</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(),</span>
+        <span class="nv">reducer</span><span class="p">:</span> <span class="n">counterReducer</span><span class="p">,</span>
+        <span class="nv">environment</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+    <span class="p">)</span>
+    
+    <span class="n">store</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">incrementButtonTapped</span><span class="p">,</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">CounterView</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">store</span><span class="p">:))</span> <span class="p">{</span>
+        <span class="nv">$0</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    
+    <span class="n">store</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">decrementButtonTapped</span><span class="p">,</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">CounterView</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">store</span><span class="p">:))</span> <span class="p">{</span>
+        <span class="nv">$0</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>El test se ejecuta perfectamente, comprueba el cambio de estado y se lanza un snapshot. Ahora bien, los errores aparecen en los métodos creados anteriormente. Podemos derivar los mensajes de error hacia nuestro test.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">TestStore</span> <span class="k">where</span> <span class="kt">Action</span><span class="p">:</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">ScopedState</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="kd">@MainActor</span>
+    <span class="kd">@discardableResult</span>
+    <span class="kd">func</span> <span class="n">send</span><span class="o">&lt;</span><span class="kt">V</span><span class="p">:</span> <span class="kt">View</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ScopedAction</span><span class="p">,</span>
+        <span class="nv">view</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">V</span><span class="p">,</span>
+        <span class="n">_</span> <span class="nv">updateExpectingResult</span><span class="p">:</span> <span class="p">((</span><span class="k">inout</span> <span class="kt">ScopedState</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+        <span class="nv">testName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span>
+        <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span>
+    <span class="p">)</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">TestStoreTask</span> <span class="p">{</span>
+        <span class="k">await</span> <span class="nf">send</span><span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="p">{</span> <span class="n">state</span> <span class="k">in</span>
+            <span class="k">do</span> <span class="p">{</span>
+                <span class="k">try</span> <span class="nf">updateExpectingResult</span><span class="p">?(</span><span class="o">&amp;</span><span class="n">state</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+                <span class="kt">XCTFail</span><span class="p">(</span><span class="s">"Threw error: </span><span class="se">\(</span><span class="n">error</span><span class="se">)</span><span class="s">"</span><span class="p">,</span> <span class="nv">file</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="n">line</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">initialState</span><span class="p">:</span> <span class="n">state</span><span class="p">,</span> <span class="nv">reducer</span><span class="p">:</span> <span class="o">.</span><span class="n">empty</span><span class="p">,</span> <span class="nv">environment</span><span class="p">:</span> <span class="p">())</span>
+            <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="nf">view</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+            <span class="nf">assertSnapshot</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="n">view</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="o">.</span><span class="nf">image</span><span class="p">(</span><span class="nv">layout</span><span class="p">:</span> <span class="o">.</span><span class="nf">device</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="o">.</span><span class="n">iPhone13</span><span class="p">)),</span> <span class="nv">file</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nv">testName</span><span class="p">:</span> <span class="n">testName</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="n">line</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Por último, podría ser interesante pasar la estrategia del snapshot fuera.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@MainActor</span>
+<span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="n">send</span><span class="o">&lt;</span><span class="kt">V</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">Format</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ScopedAction</span><span class="p">,</span>
+    <span class="nv">view</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">V</span><span class="p">,</span>
+    <span class="k">as</span> <span class="nv">snapshotting</span><span class="p">:</span> <span class="kt">Snapshotting</span><span class="o">&lt;</span><span class="kt">V</span><span class="p">,</span> <span class="kt">Format</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="n">_</span> <span class="nv">updateExpectingResult</span><span class="p">:</span> <span class="p">((</span><span class="k">inout</span> <span class="kt">ScopedState</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+    <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+    <span class="nv">testName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span>
+    <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span>
+<span class="p">)</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">TestStoreTask</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nf">send</span><span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="p">{</span> <span class="n">state</span> <span class="k">in</span>
+        <span class="k">do</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="nf">updateExpectingResult</span><span class="p">?(</span><span class="o">&amp;</span><span class="n">state</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+            <span class="kt">XCTFail</span><span class="p">(</span><span class="s">"Threw error: </span><span class="se">\(</span><span class="n">error</span><span class="se">)</span><span class="s">"</span><span class="p">,</span> <span class="nv">file</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="n">line</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">initialState</span><span class="p">:</span> <span class="n">state</span><span class="p">,</span> <span class="nv">reducer</span><span class="p">:</span> <span class="o">.</span><span class="n">empty</span><span class="p">,</span> <span class="nv">environment</span><span class="p">:</span> <span class="p">())</span>
+        <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="nf">view</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+        <span class="nf">assertSnapshot</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="n">view</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="n">snapshotting</span><span class="p">,</span> <span class="nv">file</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nv">testName</span><span class="p">:</span> <span class="n">testName</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="n">line</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Ya lo tendríamos.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">testHappyPath</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">TestStore</span><span class="p">(</span>
+        <span class="nv">initialState</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">(),</span>
+        <span class="nv">reducer</span><span class="p">:</span> <span class="n">counterReducer</span><span class="p">,</span>
+        <span class="nv">environment</span><span class="p">:</span> <span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+    <span class="p">)</span>
+    
+    <span class="k">await</span> <span class="n">store</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">incrementButtonTapped</span><span class="p">,</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">CounterView</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">store</span><span class="p">:),</span> <span class="nv">as</span><span class="p">:</span> <span class="o">.</span><span class="nf">image</span><span class="p">(</span><span class="nv">layout</span><span class="p">:</span> <span class="o">.</span><span class="nf">device</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="o">.</span><span class="n">iPhone13</span><span class="p">)))</span> <span class="p">{</span>
+            <span class="nv">$0</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="p">}</span>
+        
+    <span class="k">await</span> <span class="n">store</span><span class="o">.</span><span class="nf">send</span><span class="p">(</span><span class="o">.</span><span class="n">decrementButtonTapped</span><span class="p">,</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">CounterView</span><span class="o">.</span><span class="nf">init</span><span class="p">(</span><span class="nv">store</span><span class="p">:),</span> <span class="nv">as</span><span class="p">:</span> <span class="o">.</span><span class="nf">image</span><span class="p">(</span><span class="nv">layout</span><span class="p">:</span> <span class="o">.</span><span class="nf">device</span><span class="p">(</span><span class="nv">config</span><span class="p">:</span> <span class="o">.</span><span class="n">iPhone13</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="nv">$0</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Por último, pondremos la extensión para el método receive. Así quedaría nuestra extensión terminada.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">TestStore</span> <span class="k">where</span> <span class="kt">Action</span><span class="p">:</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">ScopedState</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="kd">@MainActor</span>
+    <span class="kd">func</span> <span class="n">receive</span><span class="o">&lt;</span><span class="kt">V</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">Format</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">Action</span><span class="p">,</span>
+        <span class="nv">view</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">V</span><span class="p">,</span>
+        <span class="k">as</span> <span class="nv">snapshotting</span><span class="p">:</span> <span class="kt">Snapshotting</span><span class="o">&lt;</span><span class="kt">V</span><span class="p">,</span> <span class="kt">Format</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">_</span> <span class="nv">updateExpectingResult</span><span class="p">:</span> <span class="p">((</span><span class="k">inout</span> <span class="kt">ScopedState</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+        <span class="nv">testName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span>
+        <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span>
+    <span class="p">)</span> <span class="k">async</span> <span class="p">{</span>
+        <span class="k">await</span> <span class="nf">receive</span><span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="p">{</span> <span class="n">state</span> <span class="k">in</span>
+            <span class="k">do</span> <span class="p">{</span>
+                <span class="k">try</span> <span class="nf">updateExpectingResult</span><span class="p">?(</span><span class="o">&amp;</span><span class="n">state</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+                <span class="kt">XCTFail</span><span class="p">(</span><span class="s">"Threw error: </span><span class="se">\(</span><span class="n">error</span><span class="se">)</span><span class="s">"</span><span class="p">,</span> <span class="nv">file</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="n">line</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">initialState</span><span class="p">:</span> <span class="n">state</span><span class="p">,</span> <span class="nv">reducer</span><span class="p">:</span> <span class="o">.</span><span class="n">empty</span><span class="p">,</span> <span class="nv">environment</span><span class="p">:</span> <span class="p">())</span>
+            <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="nf">view</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+            <span class="nf">assertSnapshot</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="n">view</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="n">snapshotting</span><span class="p">,</span> <span class="nv">file</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nv">testName</span><span class="p">:</span> <span class="n">testName</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="n">line</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="kd">@MainActor</span>
+    <span class="kd">@discardableResult</span>
+    <span class="kd">func</span> <span class="n">send</span><span class="o">&lt;</span><span class="kt">V</span><span class="p">:</span> <span class="kt">View</span><span class="p">,</span> <span class="kt">Format</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ScopedAction</span><span class="p">,</span>
+        <span class="nv">view</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">V</span><span class="p">,</span>
+        <span class="k">as</span> <span class="nv">snapshotting</span><span class="p">:</span> <span class="kt">Snapshotting</span><span class="o">&lt;</span><span class="kt">V</span><span class="p">,</span> <span class="kt">Format</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">_</span> <span class="nv">updateExpectingResult</span><span class="p">:</span> <span class="p">((</span><span class="k">inout</span> <span class="kt">ScopedState</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+        <span class="nv">file</span><span class="p">:</span> <span class="kt">StaticString</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span>
+        <span class="nv">testName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span>
+        <span class="nv">line</span><span class="p">:</span> <span class="kt">UInt</span> <span class="o">=</span> <span class="kd">#line</span>
+    <span class="p">)</span> <span class="k">async</span> <span class="o">-&gt;</span> <span class="kt">TestStoreTask</span> <span class="p">{</span>
+        <span class="k">await</span> <span class="nf">send</span><span class="p">(</span><span class="n">action</span><span class="p">)</span> <span class="p">{</span> <span class="n">state</span> <span class="k">in</span>
+            <span class="k">do</span> <span class="p">{</span>
+                <span class="k">try</span> <span class="nf">updateExpectingResult</span><span class="p">?(</span><span class="o">&amp;</span><span class="n">state</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+                <span class="kt">XCTFail</span><span class="p">(</span><span class="s">"Threw error: </span><span class="se">\(</span><span class="n">error</span><span class="se">)</span><span class="s">"</span><span class="p">,</span> <span class="nv">file</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="n">line</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">let</span> <span class="nv">store</span> <span class="o">=</span> <span class="kt">Store</span><span class="o">&lt;</span><span class="kt">ScopedState</span><span class="p">,</span> <span class="kt">ScopedAction</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">initialState</span><span class="p">:</span> <span class="n">state</span><span class="p">,</span> <span class="nv">reducer</span><span class="p">:</span> <span class="o">.</span><span class="n">empty</span><span class="p">,</span> <span class="nv">environment</span><span class="p">:</span> <span class="p">())</span>
+            <span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="nf">view</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+            <span class="nf">assertSnapshot</span><span class="p">(</span><span class="nv">matching</span><span class="p">:</span> <span class="n">view</span><span class="p">,</span> <span class="nv">as</span><span class="p">:</span> <span class="n">snapshotting</span><span class="p">,</span> <span class="nv">file</span><span class="p">:</span> <span class="n">file</span><span class="p">,</span> <span class="nv">testName</span><span class="p">:</span> <span class="n">testName</span><span class="p">,</span> <span class="nv">line</span><span class="p">:</span> <span class="n">line</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+:ET

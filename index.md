@@ -12,6 +12,8 @@ layout: default
 
 [SwiftUI, Navegación y The Composable Architecture. Segunda parte, sheets.](./composable-architecture-sheets.html).
 
+[Snapshot Testing y TCA](./snapshot-testing-tca.html).
+
 # Haskell
 
 [Tipos y funciones en Haskell](./haskell-types.html).
