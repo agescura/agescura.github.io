@@ -20,3 +20,6 @@ layout: default
 
 [Más funciones en Haskell](./more-functions.html).
 
+# Cálculo Lambda
+
+[Introducción](./calculus-introduction.html).
