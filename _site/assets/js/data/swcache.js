@@ -36,7 +36,7 @@ const resource = [
 const allowedDomains = [
   
 
-  'agescura.github.io',
+  'localhost:4000',
 
   
     'agescura.github.io',
