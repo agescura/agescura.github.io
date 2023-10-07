@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Design system. Button style in SwiftUI"
-date:   2023-10-07 22:38:14 +0200
+date:   2023-10-07 20:38:14 +0200
 categories: designsystem swiftui
 ---
 
