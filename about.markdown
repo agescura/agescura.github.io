@@ -4,15 +4,11 @@ title: About me!
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+My name is Albert Gil Escura, and I'm currently working as a engineer and working on Tyris Software, but worked in iOS development for the last 10 years. First, with Objective-C, then with Swift and now SwiftUI plus The Composable Architecture by Pointfree. I also did Computer Science with a master in geospatial technologies and a master in agile methods, including graduate school.
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+Here, some meetups I did in the past.
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+<iframe width="480" height="473" src="https://www.youtube.com/embed/lbTJB72nQnA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-[jekyll-organization]: https://github.com/jekyll
+<iframe width="480" height="473" src="https://www.youtube.com/embed/-T89-wTHm0g" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
