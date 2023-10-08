@@ -15,7 +15,7 @@ There is a trick in this context and this is so simple. You need to put a ZStack
 ZStack(alignment: .trailing) {
     Text("999")
         .hidden()
-    Text("\(idx)")
+    Text("140") // or 14, roundrectangle will have same width
 }
 .padding(.horizontal)
 .padding(.vertical, 4)
