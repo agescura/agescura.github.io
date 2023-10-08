@@ -2,7 +2,7 @@
 layout: post
 title:  "Starting new blog!"
 date:   2023-10-07 11:38:14 +0200
-categories: jekyll update
+categories: swiftui trick
 ---
 
 Hello, world!
