@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "SwiftUI Bootstrap. Initial project."
-date:   2024-08-07 21:20:14 +0200
+date:   2024-08-07 20:20:14 +0200
 categories: swiftui bootstrap
 ---
 
@@ -10,6 +10,12 @@ I think you know Bootstrap for web development. The first versions was named Twi
 My idea is to create a design system for Apple Ecosystems, not only for iOS platform that represents the same idea of Bootstrap.
 
 For example, Alerts is a good example.
+
+{% highlight html %}
+<div class="alert alert-primary" role="alert">
+  A simple primary alert—check it out!
+</div>
+{% endhighlight %}
 
 Alerts it is a simple text with a background where represents a semantic color like primary, secondary, success, danger, warning, and so on.
 
