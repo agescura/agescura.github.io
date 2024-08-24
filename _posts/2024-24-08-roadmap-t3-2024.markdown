@@ -7,7 +7,7 @@ categories: [machine learning, data science, spanish]
 
 ## ¿Por qué?
 
-{% include embed/{youtube}.html id='{DjQjngI55iA}' %}
+{% include embed/youtube.html id='DjQjngI55iA' %}
 
 Llevo unos 15 años programando. Menos de los que me gustaría y viendo la progresión, desde cuando empecé hasta ahora, el cambio ha sido increible. 
 
