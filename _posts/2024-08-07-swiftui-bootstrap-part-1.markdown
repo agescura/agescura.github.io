@@ -2,7 +2,7 @@
 layout: post
 title:  "SwiftUI Bootstrap. Initial project."
 date:   2024-08-07 20:20:14 +0200
-categories: swiftui bootstrap
+categories: swiftui bootstrap english
 ---
 
 I think you know Bootstrap for web development. The first versions was named Twitter Bottstrap, now it is open sourced and free to use.

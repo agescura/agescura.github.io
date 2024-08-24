@@ -1,0 +1,52 @@
+---
+layout: post
+title:  "Porque a veces hay que parar y reflexionar."
+date:   2024-24-08 16:010:14 +0200
+categories: [machine learning, data science, spanish]
+---
+
+## ¿Por qué?
+
+{% include embed/{youtube}.html id='{DjQjngI55iA}' %}
+
+Llevo unos 15 años programando. Menos de los que me gustaría y viendo la progresión, desde cuando empecé hasta ahora, el cambio ha sido increible. 
+
+En 2009, estaba trabajando como operario en una empresa cerámica, echando muchas horas y trabajando noches y fin de semanas. Y, aunque pensabamos, que aguantaríamos la crisis de Lehman Brothers, al final, tocó la puerta y fui uno de los ~~seleccionados para ir la calle~~, afortunados. 
+
+Gracias a esa decisión, pude iniciar un nuevo cambio, un nuevo rumbo. 
+
+Fui a la universidad, me titulé como ingeniero informático, hice un master científico en tecnologías geoespaciales, que me salvó de una buena. Si alguna vez queréis hacer el bien. No entren en ningún partido político. Existen demasiadas formas de transformar este asqueroso mundo, pero no a través de una herramienta obsoleta como un partido político. No hagan como yo.
+
+Y, por fin, cuando terminaron los estudios universitarios, allá por 2015. Empecé a trabajar formalmente como desarrollador y luego como ingeniero de aplicaciones móviles. En Barcelona, luego en Santiago de Chile, en Madrid y de forma remota, desde Castellón.
+
+Pienso, y creo, que ahora es el momento para parar y reflexionar. Bueno, no he parado por motivos personales, lo cual es un hándicap que hay que afrontar. Y la reflexión es la siguiente.
+
+Desde hace unos años, estamos viendo tiempos oscuros. La política global de bloques, OTAN y BRICS, el control sobre los grandes medios de comúnicación y las plataformas. El inicio de conflictos armados, genocidios incluidos. No son más que síntomas de un futuro incierto al cual estamos entrando o el fin de un sistema que muy problemente terminará colapsando.
+
+En lo que nos interesa, solo basta con buscar layoff, despidos masivos. Hay muchas causas de lo que está pasando y por qué las empresas tecnólogicas (y no tan tecnológicas) se están quedando sin cash, o sin tanto cash como antes de la pandemia en 2020. La principal es que estamos en una economía de guerra. En los últimos años, los presupuestos anuales en "defensa" se han disparado. Un consejo, si quieren estudiar o formarse en algo y no saben por donde empezar. Guerra. Estudien guerra.
+
+Con esto quiero decir, ¿que se termina todo?. No, en absoluto. La tecnología se recuperará, volverá. Pero los años pasan, cada vez hay más gente formada tecnológicamente. La productividad aumenta (o debería, preocúpate si en tu empresa todo son prisas y no hay un mínimo de interés en que los empleados sean más productivos).
+
+## Entonces, ¿qué?
+
+Entonces, es hora de volver a 2009. Reflexionar. Y empezar, un nuevo camino. De nuevo.
+
+Y, ¿por qué no? El empleo más sexy del siglo XXI. La ciencia de datos o data science. En verdad, lo tiene todo. Se requiere un nivel hacker, que al final no es más que tener siempre ganas de aprender. 
+
+Por otro lado, pide un cierto nivel en matemáticas, sobretodo en estadística y probabilidades. Siempre me gustaron las matemáticas, y en los últimos años, cuando tenía un poco de tiempo, me ponía a leer cosas de cálculo lámbda y teoría de categorías.
+
+Así pues, el próximo roadmap para empezar a programar será el de data science. Y, las siguientes lineas de estudio serán las siguientes.
+
+* Python. Aunque en la carrera fue el lenguaje principal, un total de 2 o 3 asignaturas anuales fueron con Python, es necesario refrescar la memoria y aprender a utilizar Python de forma rápida. La forma más interesante será crear todo un sistema con Python.
+
+* Ciencia de datos con Python. Aquí hay que aprovechar toda la teoría estadística y aplicarla en los diferentes problemas clásicos que resuelve la ciencia de datos. Seguramente, en esta parte, tocamos de lleno, las librerías típicas, como Pandas, Numpy o SciKit Learn. El objetivo final, es entender como funcionan estas librerías. No hay que quedarse con usarlas, así sin más. Esto es un error muy común, cuando tenemos prisa y memorizamos, mecanizamos los procesos de desarrollo de software.
+
+* Y R? El otro dia, mi mujer estaba resolviendo un problema con una serie de datos. Está acostumbrada a utilizar el SPSS, un software estadístico propietario. Reciéntemente, ha aprendido a utilizar R, gracias a varios cursos de Coursera. Por cierto, muy buena plataforma. La cuestión es que gracias a R, pudo estar segura que la solución al problema estaba bien, al tener dos lenguajes y dos formar para resolver un problema. Por lo tanto, merece la pena aprender R, porque es un lenguaje que se utilizar en ciencia de datos.
+
+## Conclusión. La única constante es el cambio
+
+En definitiva, que hay que moverse y volver a luchar, como en 2009.
+
+Y para terminar, un buen mensaje de Kelsey Hightower. Con la inteligencia artificial generativa, nunca ha habido un mejor momento para aprender los fundamentos. La cantidad de basura que está a punto de generarse, registrarse y distribuirse aumentará el valor de aquellos que realmente entiender cómo funcionan las cosas.
+
+Buen viaje.
